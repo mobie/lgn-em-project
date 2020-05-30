@@ -1,0 +1,4 @@
+__pycache__/
+networks/
+tmp_*
+*.n5

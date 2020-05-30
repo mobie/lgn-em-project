@@ -1,0 +1,20 @@
+{
+  "sbem-6dpf-1-whole-raw": {
+    "Color": "White",
+    "MaxValue": 255,
+    "MinValue": 0,
+    "Storage": {
+      "local": "local/sbem-adult-1-lgn-raw.xml"
+    },
+    "Type": "Image"
+  },
+  "sbem-6dpf-1-whole-boutons": {
+    "ColorMap": "Glasbey",
+    "MaxValue": 1000,
+    "MinValue": 0,
+    "Storage": {
+      "local": "local/sbem-adult-1-lgn-boutons.xml"
+    },
+    "Type": "Segmentation"
+  }
+}
