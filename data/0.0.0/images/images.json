@@ -20,5 +20,17 @@
       "local": "local/sbem-adult-1-lgn-raw.xml"
     },
     "type": "image"
+  },
+  "sbem-6dpf-1-whole-traces": {
+    "color": "glasbey",
+    "contrastLimits": [
+        0.0,
+        1000.0
+    ],
+    "storage": {
+      "local": "local/sbem-adult-1-lgn-traces.xml"
+    },
+    "tableFolder": "tables/sbem-adult-1-lgn-traces",
+    "type": "segmentation"
   }
 }
