@@ -1,5 +1,5 @@
 {
-  "sbem-6dpf-1-whole-boutons": {
+  "sbem-adult-1-lgn-boutons": {
     "color": "glasbey",
     "contrastLimits": [
       0.0,
@@ -10,7 +10,7 @@
     },
     "type": "segmentation"
   },
-  "sbem-6dpf-1-whole-raw": {
+  "sbem-adult-1-lgn-raw": {
     "color": "white",
     "contrastLimits": [
       0.0,
