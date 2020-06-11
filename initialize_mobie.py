@@ -30,13 +30,21 @@ def add_mask():
                    target='local', max_jobs=12)
 
 
+# TODO
+def add_traces():
+    pass
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--initialize', type=int, default=0)
     parser.add_argument('--add_mask', type=int, default=0)
+    parser.add_argument('--add_traces', type=int, default=0)
 
     args = parser.parse_args()
     if bool(args.initialize):
         initialize_mobie()
     if bool(args.add_mask):
         add_mask()
+    if bool(args.add_traces):
+        add_traces()
