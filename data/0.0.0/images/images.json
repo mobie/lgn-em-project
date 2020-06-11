@@ -20,6 +20,7 @@
     "storage": {
       "local": "local/sbem-adult-1-lgn-boutons.xml"
     },
+    "tableFolder": "tables/sbem-adult-1-lgn-boutons",
     "type": "segmentation"
   },
   "sbem-adult-1-lgn-mask": {
