@@ -14,9 +14,10 @@ def scale_to_res(scale):
     return ress[scale]
 
 
-def compute_object_distances(path, seg_name, scale, out_path, target, max_jobs):
+def compute_object_distances(path, scale,
+                             tmp_folder, out_path,
+                             target, max_jobs):
 
-    tmp_folder = f'tmp_distances_{seg_name}'
     morpho_key = 'morphology_s%i' % scale
     seg_key = f'setup0/timepoint0/s{scale}'
 
@@ -53,7 +54,11 @@ def compute_object_distances(path, seg_name, scale, out_path, target, max_jobs):
 # TODO implement merging of boutons
 def object_distance_table(seg_name, scale, target, max_jobs, merge_connected=False):
     seg_path = os.path.join(ROOT, f'0.0.0/images/local/{seg_name}.n5')
-    compute_object_distances(seg_path, seg_name, scale, target, max_jobs)
+    tmp_folder = f'tmp_distances_{seg_name}'
+    out_path = os.path.join(tmp_folder, 'distances.pkl')
+    compute_object_distances(seg_path, scale,
+                             tmp_folder, out_path,
+                             target, max_jobs)
     # TODO write the table
 
 
