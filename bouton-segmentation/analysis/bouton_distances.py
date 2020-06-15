@@ -1,3 +1,4 @@
+import argparse
 import json
 import os
 
@@ -5,31 +6,19 @@ import luigi
 from cluster_tools.distances import PairwiseDistanceWorkflow
 from cluster_tools.morphology import MorphologyWorkflow
 
+ROOT = '../../data'
+
 
 def scale_to_res(scale):
     ress = [[2, 1, 1], [2, 1, 1], [2, 2, 2], [2, 2, 2], [2, 2, 2]]
     return ress[scale]
 
 
-def compute_object_distances(full_vol, target, max_jobs, scale, for_pp=True):
+def compute_object_distances(path, seg_name, scale, out_path, target, max_jobs):
 
-    if full_vol:
-        path = '/g/rompani/pape/lgn/data.n5'
-        tmp_folder = '/g/rompani/pape/lgn/tmp_dist'
-        out_path = './pairwise_bouton_distances.pkl'
-    else:
-        path = './data.n5'
-        tmp_folder = './tmp_dist'
-        out_path = './pairwise_distances.pkl'
-
-    if for_pp:
-        seg_key = 'predictions/pp-seg-mip/s%i' % scale
-    else:
-        seg_key = 'predictions/pp-seg-mip/s%i' % scale
-        tmp_folder += '_no_pp'
-        out_path = './pairwise_bouton_distances_no_pp.pkl'
-
+    tmp_folder = f'tmp_distances_{seg_name}'
     morpho_key = 'morphology_s%i' % scale
+    seg_key = f'setup0/timepoint0/s{scale}'
 
     config_dir = os.path.join(tmp_folder, 'configs')
     os.makedirs(config_dir, exist_ok=True)
@@ -57,4 +46,23 @@ def compute_object_distances(full_vol, target, max_jobs, scale, for_pp=True):
                                     morphology_path=path, morphology_key=morpho_key,
                                     output_path=out_path, max_distance=max_dist,
                                     resolution=resolution)
-    luigi.build([task], local_scheduler=True)
+    ret = luigi.build([task], local_scheduler=True)
+    assert ret
+
+
+# TODO implement merging of boutons
+def object_distance_table(seg_name, scale, target, max_jobs, merge_connected=False):
+    seg_path = os.path.join(ROOT, f'0.0.0/images/local/{seg_name}.n5')
+    compute_object_distances(seg_path, seg_name, scale, target, max_jobs)
+    # TODO write the table
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--seg_name', default='sbem-adult-1-lgn-boutons')
+    parser.add_argument('--scale', default=2, type=int)
+    parser.add_argument('--target', default='local')
+    parser.add_argument('--max_jobs', type=int, default=64)
+
+    args = parser.parse_args()
+    object_distance_table(args.seg_name, args.scale, args.target, args.max_jobs)
