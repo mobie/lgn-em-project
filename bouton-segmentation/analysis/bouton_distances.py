@@ -25,29 +25,37 @@ def compute_object_distances(path, scale,
     os.makedirs(config_dir, exist_ok=True)
     configs = MorphologyWorkflow.get_config()
     conf = configs['global']
-    shebang = '/g/kreshuk/pape/Work/software/conda/miniconda3/envs/torch13/bin/python'
     block_shape = [32, 256, 256]
-    conf.update({'shebang': shebang, 'block_shape': block_shape})
+    conf.update({'block_shape': block_shape})
     with open(os.path.join(config_dir, 'global.config'), 'w') as f:
         json.dump(conf, f)
 
     # compute object morphology
-    task = MorphologyWorkflow(tmp_folder=tmp_folder, config_dir=config_dir,
-                              target=target, max_jobs=max_jobs,
-                              input_path=path, input_key=seg_key,
-                              output_path=path, output_key=morpho_key)
-    luigi.build([task], local_scheduler=True)
+    task = MorphologyWorkflow
+    t = task(tmp_folder=tmp_folder, config_dir=config_dir,
+             target=target, max_jobs=max_jobs,
+             input_path=path, input_key=seg_key,
+             output_path=path, output_key=morpho_key)
+    luigi.build([t], local_scheduler=True)
 
     # compute pairwaise object distances
     resolution = scale_to_res(scale)
     max_dist = 250
-    task = PairwiseDistanceWorkflow(tmp_folder=tmp_folder, config_dir=config_dir,
-                                    target=target, max_jobs=max_jobs,
-                                    input_path=path, input_key=seg_key,
-                                    morphology_path=path, morphology_key=morpho_key,
-                                    output_path=out_path, max_distance=max_dist,
-                                    resolution=resolution)
-    ret = luigi.build([task], local_scheduler=True)
+    task = PairwiseDistanceWorkflow
+
+    configs = task.get_config()
+    config = configs['object_distances']
+    config.update({'mem_limit': 32, 'time_limit': 1000})
+    with open(os.path.join(config_dir, 'object_distances.config'), 'w') as f:
+        json.dump(config, f)
+
+    t = task(tmp_folder=tmp_folder, config_dir=config_dir,
+             target=target, max_jobs=max_jobs,
+             input_path=path, input_key=seg_key,
+             morphology_path=path, morphology_key=morpho_key,
+             output_path=out_path, max_distance=max_dist,
+             resolution=resolution)
+    ret = luigi.build([t], local_scheduler=True)
     assert ret
 
 
