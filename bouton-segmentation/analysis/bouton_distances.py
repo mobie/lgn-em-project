@@ -78,12 +78,17 @@ def compute_object_distances(path, scale,
 def object_distance_table(seg_name, scale, target, max_jobs, merge_connected=False, max_size=None):
     seg_path = os.path.join(ROOT, f'0.0.0/images/local/{seg_name}.n5')
     tmp_folder = f'tmp_distances_{seg_name}'
-    out_path = os.path.join(tmp_folder, 'distances.pkl')
+
+    if merge_connected:
+        raise NotImplementedError
+        out_path = './merged_distances.pkl'
+    else:
+        out_path = './distances.pkl'
+
     compute_object_distances(seg_path, scale,
                              tmp_folder, out_path,
                              target, max_jobs,
                              max_size=max_size)
-    # TODO write the table
 
 
 if __name__ == '__main__':
