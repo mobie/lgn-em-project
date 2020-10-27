@@ -2,9 +2,11 @@ import argparse
 import json
 import os
 
+import numpy as np
 import luigi
 from cluster_tools.distances import PairwiseDistanceWorkflow
 from cluster_tools.morphology import MorphologyWorkflow
+from elf.io import open_file
 
 ROOT = '../../data'
 
@@ -14,9 +16,20 @@ def scale_to_res(scale):
     return ress[scale]
 
 
+def find_max_size(path, key, topk=25):
+    with open_file(path, 'r') as f:
+        ds = f[key]
+        sizes = ds[:, 1]
+
+    sizes = np.sort(sizes)[::-1]
+    print("Top", topk, "sizes:")
+    print(sizes[:topk])
+
+
 def compute_object_distances(path, scale,
                              tmp_folder, out_path,
-                             target, max_jobs):
+                             target, max_jobs,
+                             max_size):
 
     morpho_key = 'morphology_s%i' % scale
     seg_key = f'setup0/timepoint0/s{scale}'
@@ -38,7 +51,11 @@ def compute_object_distances(path, scale,
              output_path=path, output_key=morpho_key)
     luigi.build([t], local_scheduler=True)
 
-    # compute pairwaise object distances
+    if max_size is None:
+        find_max_size(path, morpho_key)
+        return
+
+    # compute pairwise object distances
     resolution = scale_to_res(scale)
     max_dist = 250
     task = PairwiseDistanceWorkflow
@@ -54,20 +71,26 @@ def compute_object_distances(path, scale,
              input_path=path, input_key=seg_key,
              morphology_path=path, morphology_key=morpho_key,
              output_path=out_path, max_distance=max_dist,
-             resolution=resolution)
+             resolution=resolution, max_size=max_size)
     ret = luigi.build([t], local_scheduler=True)
     assert ret
 
 
 # TODO implement merging of boutons
-def object_distance_table(seg_name, scale, target, max_jobs, merge_connected=False):
+def object_distance_table(seg_name, scale, target, max_jobs, merge_connected=False, max_size=None):
     seg_path = os.path.join(ROOT, f'0.0.0/images/local/{seg_name}.n5')
     tmp_folder = f'tmp_distances_{seg_name}'
-    out_path = os.path.join(tmp_folder, 'distances.pkl')
+
+    if merge_connected:
+        raise NotImplementedError
+        out_path = './merged_distances.pkl'
+    else:
+        out_path = './distances.pkl'
+
     compute_object_distances(seg_path, scale,
                              tmp_folder, out_path,
-                             target, max_jobs)
-    # TODO write the table
+                             target, max_jobs,
+                             max_size=max_size)
 
 
 if __name__ == '__main__':
@@ -76,6 +99,8 @@ if __name__ == '__main__':
     parser.add_argument('--scale', default=2, type=int)
     parser.add_argument('--target', default='local')
     parser.add_argument('--max_jobs', type=int, default=64)
+    parser.add_argument('--max_size', type=int, default=int(1e7))
 
     args = parser.parse_args()
-    object_distance_table(args.seg_name, args.scale, args.target, args.max_jobs)
+    object_distance_table(args.seg_name, args.scale, args.target, args.max_jobs,
+                          max_size=args.max_size)
