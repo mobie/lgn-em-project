@@ -26,13 +26,12 @@ def find_max_size(path, key, topk=25):
     print(sizes[:topk])
 
 
-def compute_object_distances(path, scale,
+def compute_object_distances(path, seg_key, scale,
                              tmp_folder, out_path,
                              target, max_jobs,
                              max_size):
 
     morpho_key = 'morphology_s%i' % scale
-    seg_key = f'setup0/timepoint0/s{scale}'
 
     config_dir = os.path.join(tmp_folder, 'configs')
     os.makedirs(config_dir, exist_ok=True)
@@ -76,18 +75,25 @@ def compute_object_distances(path, scale,
     assert ret
 
 
-# TODO implement merging of boutons
-def object_distance_table(seg_name, scale, target, max_jobs, merge_connected=False, max_size=None):
+def object_distance_table(seg_name, scale, target, max_jobs,
+                          use_merged_segmentation=False, max_size=None):
     seg_path = os.path.join(ROOT, f'0.0.0/images/local/{seg_name}.n5')
+    seg_key = f'setup0/timepoint0/s{scale}'
     tmp_folder = f'tmp_distances_{seg_name}'
 
-    if merge_connected:
-        raise NotImplementedError
+    # ideally we would just have the merged segmentation in another seg-name
+    # and use the output of the script 'bouton-segmentation/segmentation/6_merge_segmentation.py'
+    # however, in the interest of time I am reusing the result from an earlier iteration of that script,
+    # which is not in the mobie format yet
+    if use_merged_segmentation:
+        seg_path = '/g/rompani/pape/lgn/data.n5'
+        seg_key = f'predictions/pp-seg-mip/s{scale}'
+        tmp_folder = 'tmp_distances_merged'
         out_path = './merged_distances.pkl'
     else:
         out_path = './distances.pkl'
 
-    compute_object_distances(seg_path, scale,
+    compute_object_distances(seg_path, seg_key, scale,
                              tmp_folder, out_path,
                              target, max_jobs,
                              max_size=max_size)
@@ -97,10 +103,13 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--seg_name', default='sbem-adult-1-lgn-boutons')
     parser.add_argument('--scale', default=2, type=int)
-    parser.add_argument('--target', default='local')
-    parser.add_argument('--max_jobs', type=int, default=64)
+    parser.add_argument('--target', default='slurm')
+    parser.add_argument('--max_jobs', type=int, default=150)
     parser.add_argument('--max_size', type=int, default=int(1e7))
+    parser.add_argument('--use_merged_segmentation', type=int, default=0)
 
     args = parser.parse_args()
-    object_distance_table(args.seg_name, args.scale, args.target, args.max_jobs,
-                          max_size=args.max_size)
+    object_distance_table(args.seg_name, args.scale,
+                          args.target, args.max_jobs,
+                          max_size=args.max_size,
+                          use_merged_segmentation=bool(args.use_merged_segmentation))
