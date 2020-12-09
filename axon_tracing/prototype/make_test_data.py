@@ -8,8 +8,9 @@ from elf.segmentation.utils import normalize_input
 
 PATH = '/g/rompani/lgn-em-datasets/data/0.0.0/images/local/sbem-adult-1-lgn-raw.n5'
 BOUTON_PATH = '/g/rompani/lgn-em-datasets/data/0.0.0/images/local/sbem-adult-1-lgn-boutons.n5'
-MODEL_PATH = os.path.join('/g/kreshuk/pape/Work/my_projects/super_embeddings/experiments/lgn',
-                          'proofread/z100/imws_saved_state.torch')
+# MODEL_PATH = os.path.join('/g/kreshuk/pape/Work/my_projects/super_embeddings/experiments/lgn',
+#                           'proofread/z100/imws_saved_state.torch')
+MODEL_PATH = '/g/kreshuk/pape/Work/my_projects/super_embeddings/experiments/lgn/models_supervised-2d/lr0.0001_use-affs1.state'
 
 CENTER = (338.21969826291144, 115.66693588888701, 33.773648522038826)
 
@@ -25,7 +26,8 @@ def run_prediction(raw):
     ckpt = (
         UNet2d,
         model_kwargs,
-        MODEL_PATH
+        MODEL_PATH,
+        'model'
     )
 
     block_shape = (1,) + raw.shape[1:]
@@ -57,6 +59,8 @@ def make_test_data(halo=[64, 512, 512]):
         bb = tuple(slice(ce - ha, ce + ha) for ce, ha in zip(center, halo))
         raw = ds[bb]
 
+    # to get rid of some ugly artifact
+    raw = raw[:100]
     pred = run_prediction(raw)
 
     with h5py.File('./test_data.h5', 'a') as f:
@@ -74,6 +78,7 @@ def add_boutons(scale_factor=[1, 2, 2], halo=[64, 512, 512]):
                    for ce, ha, sf in zip(center, halo, scale_factor))
         seg = ds[bb]
 
+    seg = seg[:100]
     target_shape = tuple(sh * sf for sh, sf in zip(seg.shape, scale_factor))
     seg = resize(seg, target_shape, order=0, preserve_range=True).astype(seg.dtype)
 
