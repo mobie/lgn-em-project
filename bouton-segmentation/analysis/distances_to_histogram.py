@@ -25,9 +25,9 @@ def plot_multiple(distances, max_distances):
     plt.show()
 
 
-def distance_histogram(max_distances=None):
+def distance_histogram(dist_path='./distances.pkl', max_distances=None):
     # distances = 250 * np.random.rand(10000)
-    distances = load_distances()
+    distances = load_distances(dist_path)
     if max_distances is None:
         plot_single(distances)
     else:
@@ -35,5 +35,12 @@ def distance_histogram(max_distances=None):
 
 
 if __name__ == '__main__':
-    max_distances = [10, 25, 50, 100, 250]
-    distance_histogram(max_distances)
+
+    # dist_path = './distances.pkl'
+    dist_path = './merged_distances.pkl'
+
+    # max_distances = [10, 25, 50, 100, 250]
+    max_distances = None
+
+    distance_histogram(dist_path=dist_path,
+                       max_distances=max_distances)

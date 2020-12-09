@@ -4,8 +4,6 @@ import h5py
 import z5py
 
 from skimage.transform import resize
-from mipnet.models.unet import UNet2d
-from mipnet.utils.prediction import predict_with_halo
 from elf.segmentation.utils import normalize_input
 
 PATH = '/g/rompani/lgn-em-datasets/data/0.0.0/images/local/sbem-adult-1-lgn-raw.n5'
@@ -17,6 +15,8 @@ CENTER = (338.21969826291144, 115.66693588888701, 33.773648522038826)
 
 
 def run_prediction(raw):
+    from mipnet.models.unet import UNet2d
+    from mipnet.utils.prediction import predict_with_halo
     model_kwargs = dict(
         in_channels=1, out_channels=8,
         initial_features=32, depth=4,
@@ -68,7 +68,6 @@ def add_boutons(scale_factor=[1, 2, 2], halo=[64, 512, 512]):
     resolution = [.04, .02, .02]
     with z5py.File(BOUTON_PATH, 'r') as f:
         ds = f['setup0/timepoint0/s0']
-        shape = ds.shape
 
         center = [int(ce / res) for ce, res in zip(CENTER[::-1], resolution)]
         bb = tuple(slice(ce - ha // sf, ce + ha // sf)
@@ -82,6 +81,32 @@ def add_boutons(scale_factor=[1, 2, 2], halo=[64, 512, 512]):
         f.create_dataset('boutons', data=seg, compression='gzip')
 
 
+def check_test_data():
+    import napari
+    with h5py.File('./test_data.h5', 'r') as f:
+        raw = f['raw'][:]
+        bd = f['boundaries'][:]
+        boutons = f['boutons'][:]
+
+    with napari.gui_qt():
+        viewer = napari.Viewer()
+        viewer.add_image(raw)
+        viewer.add_image(bd)
+        viewer.add_labels(boutons)
+
+
+def replace_defect():
+    zz = [66]
+    with h5py.File('./test_data.h5', 'a') as f:
+        for z in zz:
+            for name in ('raw', 'boundaries', 'boutons'):
+                ds = f[name]
+                ds[z] = ds[z - 1]
+
+
 if __name__ == '__main__':
-    make_test_data()
-    add_boutons()
+    # make_test_data()
+    # add_boutons()
+
+    replace_defect()
+    check_test_data()
