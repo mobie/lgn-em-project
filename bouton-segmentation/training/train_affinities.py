@@ -13,14 +13,13 @@ from inferno.trainers.callbacks.scheduling import AutoLR
 from inferno.utils.io_utils import yaml2dict
 from inferno.trainers.callbacks.essentials import SaveAtBestValidationScore
 from inferno.io.transform.base import Compose
+from inferno.extensions.metrics import SorensenDiceLoss
 
 from neurofire.criteria.loss_wrapper import LossWrapper
-from neurofire.criteria.loss_transforms import ApplyAndRemoveMask, InvertTarget, SigmoidPrediction
+from neurofire.criteria.loss_transforms import ApplyAndRemoveMask, InvertTarget
 
 import mipnet.models.unet as models
 from mipnet.datasets import get_cremi_loader
-from mipnet.criteria import FrequencyWeightedBCEWithLogits
-from mipnet.criteria import RobustDiceLoss
 
 
 logging.basicConfig(format='[+][%(asctime)-15s][%(name)s %(levelname)s]'
@@ -30,25 +29,13 @@ logging.basicConfig(format='[+][%(asctime)-15s][%(name)s %(levelname)s]'
 logger = logging.getLogger(__name__)
 
 
-def dice_loss(with_affinities, add_sigmoid=False):
+# TODO affinity smoothing
+# TODO try dice + bce loss
+def dice_loss():
     print("Build Dice loss")
-    trafos = []
-    if with_affinities:
-        trafos.extend([ApplyAndRemoveMask(), InvertTarget()])
-    if add_sigmoid:
-        trafos.append(SigmoidPrediction())
+    trafos = [ApplyAndRemoveMask(), InvertTarget()]
     trafos = Compose(*trafos)
-    return LossWrapper(criterion=RobustDiceLoss(sigma_weight_zero=1.e-4),
-                       transforms=trafos)
-
-
-def bce_loss(with_affinities):
-    print("Build BCE loss")
-    if with_affinities:
-        trafos = Compose(ApplyAndRemoveMask(), InvertTarget())
-    else:
-        trafos = None
-    return LossWrapper(criterion=FrequencyWeightedBCEWithLogits(),
+    return LossWrapper(criterion=SorensenDiceLoss(),
                        transforms=trafos)
 
 
@@ -56,9 +43,7 @@ def bce_loss(with_affinities):
 def set_up_training(project_directory,
                     config,
                     data_config,
-                    load_pretrained_model,
-                    loss_str,
-                    with_affinities):
+                    load_pretrained_model):
     # Get model
     if load_pretrained_model:
         model = Trainer().load(from_directory=project_directory,
@@ -67,8 +52,9 @@ def set_up_training(project_directory,
         model_name = config.get('model_name')
         model = getattr(models, model_name)(**config.get('model_kwargs'))
 
-    loss = dice_loss(with_affinities) if loss_str == 'Dice' else bce_loss(with_affinities)
-    metric = dice_loss(with_affinities, add_sigmoid=loss_str == 'BCE')
+    loss = dice_loss()
+    # TODO use wsdt + ap-metric
+    metric = dice_loss()
 
     # Build trainer and validation metric
     logger.info("Building trainer.")
@@ -116,9 +102,7 @@ def training(project_directory,
              validation_configuration_file,
              max_training_iters=int(1e5),
              from_checkpoint=False,
-             load_pretrained_model=False,
-             loss_str='Dice',
-             with_affinities=True):
+             load_pretrained_model=False):
 
     assert not (from_checkpoint and load_pretrained_model)
 
@@ -139,9 +123,7 @@ def training(project_directory,
         trainer = set_up_training(project_directory,
                                   config,
                                   data_config,
-                                  load_pretrained_model,
-                                  loss_str,
-                                  with_affinities)
+                                  load_pretrained_model)
 
     trainer.set_max_num_iterations(max_training_iters)
 
@@ -160,14 +142,11 @@ def training(project_directory,
     trainer.fit()
 
 
-def make_train_config(train_config_file, gpus, affinity_config, loss):
+def make_train_config(train_config_file, gpus, affinity_config):
     template = './template_config/train_config_unet.yml'
 
-    activation = 'Sigmoid' if loss == 'Dice' else None
-    if affinity_config is None:
-        n_out = 1
-    else:
-        n_out = len(affinity_config['offsets']) + 1
+    activation = 'Sigmoid'
+    n_out = len(affinity_config['offsets']) + 1
 
     template = yaml2dict(template)
     template['model_kwargs']['out_channels'] = n_out
@@ -223,14 +202,8 @@ def main():
     parser.add_argument('--max_train_iters', type=int, default=int(1e5))
     parser.add_argument('--from_checkpoint', type=int, default=0)
     parser.add_argument('--load_network', type=int, default=0)
-    parser.add_argument('--loss', type=str, default='Dice')
-    parser.add_argument('--with_affinities', type=int, default=1)
 
     args = parser.parse_args()
-
-    loss = args.loss
-    assert loss in ("Dice", "BCE")
-    with_affinities = bool(args.with_affinities)
 
     project_directory = args.project_directory
     if not os.path.exists(project_directory):
@@ -245,16 +218,13 @@ def main():
     validation_config = os.path.join(project_directory, 'validation_config.yml')
     data_config = os.path.join(project_directory, 'data_config.yml')
 
-    if with_affinities:
-        affinity_config = {'retain_mask': True, 'segmentation_to_binary': True}
-        offsets = get_offsets()
-        affinity_config['offsets'] = offsets
-    else:
-        affinity_config = None
+    affinity_config = {'retain_mask': True, 'segmentation_to_binary': True}
+    offsets = get_offsets()
+    affinity_config['offsets'] = offsets
 
     # only copy files to project directory if we DON'T load from checkpoint
     if not bool(args.from_checkpoint):
-        make_train_config(train_config, gpus, affinity_config, loss)
+        make_train_config(train_config, gpus, affinity_config)
         make_data_config(data_config, len(gpus), affinity_config)
         make_validation_config(validation_config, affinity_config)
         copy_train_file(project_directory)
@@ -265,9 +235,7 @@ def main():
              validation_config,
              max_training_iters=args.max_train_iters,
              from_checkpoint=bool(args.from_checkpoint),
-             load_pretrained_model=bool(args.load_network),
-             loss_str=loss,
-             with_affinities=with_affinities)
+             load_pretrained_model=bool(args.load_network))
 
 
 if __name__ == '__main__':
