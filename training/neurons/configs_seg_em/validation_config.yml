@@ -1,0 +1,182 @@
+defect_augmentation_config:
+  deformation_mode: undirected
+  deformation_strength: 16
+  p_artifact_source: 0.0
+  p_deformed_slice: 0.02
+  p_low_contrast: 0.02
+  p_missing_slice: 0.02
+loader_config:
+  batch_size: 1
+  drop_last: true
+  num_workers: 6
+  pin_memory: false
+  shuffle: true
+master_config:
+  elastic_transform:
+    alpha: 2000.0
+    order: 0
+    sigma: 50.0
+  random_slides: true
+  shape_after_slide:
+  - 160
+  - 160
+names:
+- 974
+- 976
+- 977
+- 978
+- 979
+- 98
+- 980
+- 981
+- 982
+- 983
+- 984
+- 985
+- 986
+- 987
+- 988
+- 989
+- 99
+- 990
+- 991
+- 992
+- 993
+- 994
+- 995
+- 996
+- 997
+- 998
+- 999
+slicing_config:
+  stride:
+  - 4
+  - 32
+  - 32
+  window_size:
+  - 32
+  - 180
+  - 180
+volume_config:
+  raw:
+    dtype: float32
+    path:
+      1: /g/rompani/pape/lgn/tranining_data/boutons/V3/bdv/training_data_01.h5
+      98: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/98.h5
+      99: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/99.h5
+      974: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/974.h5
+      976: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/976.h5
+      977: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/977.h5
+      978: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/978.h5
+      979: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/979.h5
+      980: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/980.h5
+      981: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/981.h5
+      982: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/982.h5
+      983: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/983.h5
+      984: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/984.h5
+      985: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/985.h5
+      986: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/986.h5
+      987: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/987.h5
+      988: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/988.h5
+      989: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/989.h5
+      990: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/990.h5
+      991: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/991.h5
+      992: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/992.h5
+      993: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/993.h5
+      994: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/994.h5
+      995: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/995.h5
+      996: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/996.h5
+      997: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/997.h5
+      998: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/998.h5
+      999: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/999.h5
+    path_in_file:
+      1: raw
+      98: raw
+      99: raw
+      974: raw
+      976: raw
+      977: raw
+      978: raw
+      979: raw
+      980: raw
+      981: raw
+      982: raw
+      983: raw
+      984: raw
+      985: raw
+      986: raw
+      987: raw
+      988: raw
+      989: raw
+      990: raw
+      991: raw
+      992: raw
+      993: raw
+      994: raw
+      995: raw
+      996: raw
+      997: raw
+      998: raw
+      999: raw
+    sigma: 0.025
+  rejection_threshold: 0.1
+  segmentation:
+    dtype: int64
+    path:
+      1: /g/rompani/pape/lgn/tranining_data/boutons/V3/bdv/training_data_01.h5
+      98: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/98.h5
+      99: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/99.h5
+      974: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/974.h5
+      976: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/976.h5
+      977: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/977.h5
+      978: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/978.h5
+      979: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/979.h5
+      980: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/980.h5
+      981: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/981.h5
+      982: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/982.h5
+      983: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/983.h5
+      984: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/984.h5
+      985: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/985.h5
+      986: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/986.h5
+      987: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/987.h5
+      988: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/988.h5
+      989: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/989.h5
+      990: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/990.h5
+      991: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/991.h5
+      992: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/992.h5
+      993: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/993.h5
+      994: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/994.h5
+      995: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/995.h5
+      996: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/996.h5
+      997: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/997.h5
+      998: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/998.h5
+      999: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/999.h5
+    path_in_file:
+      1: labels
+      98: labels
+      99: labels
+      974: labels
+      976: labels
+      977: labels
+      978: labels
+      979: labels
+      980: labels
+      981: labels
+      982: labels
+      983: labels
+      984: labels
+      985: labels
+      986: labels
+      987: labels
+      988: labels
+      989: labels
+      990: labels
+      991: labels
+      992: labels
+      993: labels
+      994: labels
+      995: labels
+      996: labels
+      997: labels
+      998: labels
+      999: labels

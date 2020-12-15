@@ -1,0 +1,1303 @@
+defect_augmentation_config:
+  deformation_mode: undirected
+  deformation_strength: 16
+  p_artifact_source: 0.0
+  p_deformed_slice: 0.02
+  p_low_contrast: 0.02
+  p_missing_slice: 0.02
+loader_config:
+  batch_size: 1
+  drop_last: true
+  num_workers: 6
+  pin_memory: false
+  shuffle: true
+master_config:
+  elastic_transform:
+    alpha: 2000.0
+    order: 0
+    sigma: 50.0
+  random_slides: true
+  shape_after_slide:
+  - 160
+  - 160
+names:
+- 1
+- 10
+- 100
+- 1000
+- 1001
+- 1002
+- 1003
+- 1004
+- 1005
+- 1006
+- 1007
+- 1008
+- 1009
+- 1010
+- 1011
+- 1012
+- 1013
+- 1014
+- 1015
+- 1016
+- 1017
+- 1018
+- 1019
+- 102
+- 1020
+- 1021
+- 1022
+- 1023
+- 1024
+- 1025
+- 1026
+- 1027
+- 1028
+- 1029
+- 103
+- 1030
+- 1031
+- 1032
+- 1033
+- 1034
+- 1035
+- 1036
+- 1037
+- 1048
+- 1049
+- 105
+- 1050
+- 1051
+- 1052
+- 1053
+- 1054
+- 1055
+- 1056
+- 1057
+- 1058
+- 1059
+- 106
+- 1060
+- 1061
+- 1062
+- 1063
+- 1064
+- 1065
+- 1066
+- 1067
+- 1068
+- 1069
+- 1070
+- 1071
+- 1072
+- 1073
+- 1074
+- 108
+- 1087
+- 1088
+- 1089
+- 109
+- 1090
+- 1091
+- 1092
+- 1093
+- 1094
+- 1095
+- 1096
+- 1097
+- 1098
+- 1099
+- 1100
+- 1101
+- 1102
+- 1103
+- 1104
+- 1105
+- 1106
+- 1107
+- 1108
+- 1109
+- 1110
+- 1111
+- 1112
+- 1113
+- 1114
+- 1115
+- 1116
+- 1117
+- 1118
+- 1119
+- 1120
+- 1121
+- 1122
+- 1123
+- 1124
+- 1125
+- 1126
+- 1127
+- 1128
+- 1129
+- 1130
+- 1131
+- 1132
+- 1133
+- 1134
+- 1135
+- 1136
+- 1137
+- 1138
+- 1139
+- 1140
+- 1141
+- 1142
+- 1143
+- 1148
+- 12
+- 13
+- 14
+- 15
+- 16
+- 17
+- 18
+- 2
+- 20
+- 21
+- 22
+- 23
+- 24
+- 25
+- 26
+- 27
+- 29
+- 3
+- 30
+- 32
+- 33
+- 34
+- 35
+- 36
+- 37
+- 39
+- 4
+- 40
+- 41
+- 42
+- 43
+- 44
+- 45
+- 46
+- 48
+- 49
+- 5
+- 51
+- 52
+- 53
+- 54
+- 55
+- 56
+- 57
+- 58
+- 59
+- 6
+- 60
+- 61
+- 63
+- 64
+- 65
+- 66
+- 67
+- 69
+- 70
+- 72
+- 74
+- 75
+- 77
+- 78
+- 79
+- 8
+- 814
+- 816
+- 82
+- 83
+- 84
+- 85
+- 86
+- 87
+- 88
+- 9
+- 90
+- 92
+- 928
+- 929
+- 93
+- 935
+- 936
+- 937
+- 938
+- 939
+- 94
+- 940
+- 941
+- 942
+- 943
+- 944
+- 945
+- 946
+- 947
+- 948
+- 949
+- 95
+- 950
+- 951
+- 952
+- 953
+- 954
+- 955
+- 956
+- 957
+- 958
+- 959
+- 960
+- 961
+- 962
+- 963
+- 964
+- 965
+- 966
+- 967
+- 968
+- 969
+- 97
+- 970
+- 971
+- 972
+- 973
+slicing_config:
+  stride:
+  - 4
+  - 32
+  - 32
+  window_size:
+  - 32
+  - 180
+  - 180
+volume_config:
+  raw:
+    dtype: float32
+    path:
+      1: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1.h5
+      2: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/2.h5
+      3: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/3.h5
+      4: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/4.h5
+      5: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/5.h5
+      6: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/6.h5
+      8: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/8.h5
+      9: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/9.h5
+      10: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/10.h5
+      12: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/12.h5
+      13: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/13.h5
+      14: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/14.h5
+      15: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/15.h5
+      16: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/16.h5
+      17: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/17.h5
+      18: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/18.h5
+      20: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/20.h5
+      21: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/21.h5
+      22: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/22.h5
+      23: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/23.h5
+      24: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/24.h5
+      25: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/25.h5
+      26: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/26.h5
+      27: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/27.h5
+      29: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/29.h5
+      30: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/30.h5
+      32: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/32.h5
+      33: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/33.h5
+      34: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/34.h5
+      35: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/35.h5
+      36: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/36.h5
+      37: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/37.h5
+      39: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/39.h5
+      40: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/40.h5
+      41: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/41.h5
+      42: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/42.h5
+      43: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/43.h5
+      44: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/44.h5
+      45: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/45.h5
+      46: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/46.h5
+      48: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/48.h5
+      49: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/49.h5
+      51: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/51.h5
+      52: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/52.h5
+      53: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/53.h5
+      54: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/54.h5
+      55: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/55.h5
+      56: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/56.h5
+      57: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/57.h5
+      58: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/58.h5
+      59: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/59.h5
+      60: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/60.h5
+      61: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/61.h5
+      63: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/63.h5
+      64: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/64.h5
+      65: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/65.h5
+      66: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/66.h5
+      67: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/67.h5
+      69: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/69.h5
+      70: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/70.h5
+      72: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/72.h5
+      74: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/74.h5
+      75: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/75.h5
+      77: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/77.h5
+      78: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/78.h5
+      79: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/79.h5
+      82: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/82.h5
+      83: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/83.h5
+      84: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/84.h5
+      85: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/85.h5
+      86: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/86.h5
+      87: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/87.h5
+      88: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/88.h5
+      90: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/90.h5
+      92: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/92.h5
+      93: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/93.h5
+      94: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/94.h5
+      95: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/95.h5
+      97: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/97.h5
+      100: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/100.h5
+      102: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/102.h5
+      103: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/103.h5
+      105: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/105.h5
+      106: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/106.h5
+      108: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/108.h5
+      109: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/109.h5
+      814: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/814.h5
+      816: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/816.h5
+      928: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/928.h5
+      929: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/929.h5
+      935: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/935.h5
+      936: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/936.h5
+      937: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/937.h5
+      938: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/938.h5
+      939: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/939.h5
+      940: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/940.h5
+      941: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/941.h5
+      942: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/942.h5
+      943: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/943.h5
+      944: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/944.h5
+      945: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/945.h5
+      946: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/946.h5
+      947: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/947.h5
+      948: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/948.h5
+      949: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/949.h5
+      950: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/950.h5
+      951: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/951.h5
+      952: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/952.h5
+      953: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/953.h5
+      954: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/954.h5
+      955: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/955.h5
+      956: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/956.h5
+      957: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/957.h5
+      958: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/958.h5
+      959: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/959.h5
+      960: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/960.h5
+      961: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/961.h5
+      962: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/962.h5
+      963: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/963.h5
+      964: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/964.h5
+      965: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/965.h5
+      966: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/966.h5
+      967: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/967.h5
+      968: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/968.h5
+      969: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/969.h5
+      970: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/970.h5
+      971: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/971.h5
+      972: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/972.h5
+      973: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/973.h5
+      1000: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1000.h5
+      1001: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1001.h5
+      1002: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1002.h5
+      1003: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1003.h5
+      1004: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1004.h5
+      1005: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1005.h5
+      1006: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1006.h5
+      1007: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1007.h5
+      1008: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1008.h5
+      1009: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1009.h5
+      1010: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1010.h5
+      1011: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1011.h5
+      1012: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1012.h5
+      1013: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1013.h5
+      1014: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1014.h5
+      1015: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1015.h5
+      1016: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1016.h5
+      1017: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1017.h5
+      1018: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1018.h5
+      1019: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1019.h5
+      1020: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1020.h5
+      1021: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1021.h5
+      1022: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1022.h5
+      1023: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1023.h5
+      1024: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1024.h5
+      1025: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1025.h5
+      1026: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1026.h5
+      1027: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1027.h5
+      1028: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1028.h5
+      1029: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1029.h5
+      1030: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1030.h5
+      1031: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1031.h5
+      1032: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1032.h5
+      1033: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1033.h5
+      1034: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1034.h5
+      1035: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1035.h5
+      1036: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1036.h5
+      1037: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1037.h5
+      1048: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1048.h5
+      1049: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1049.h5
+      1050: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1050.h5
+      1051: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1051.h5
+      1052: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1052.h5
+      1053: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1053.h5
+      1054: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1054.h5
+      1055: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1055.h5
+      1056: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1056.h5
+      1057: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1057.h5
+      1058: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1058.h5
+      1059: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1059.h5
+      1060: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1060.h5
+      1061: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1061.h5
+      1062: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1062.h5
+      1063: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1063.h5
+      1064: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1064.h5
+      1065: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1065.h5
+      1066: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1066.h5
+      1067: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1067.h5
+      1068: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1068.h5
+      1069: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1069.h5
+      1070: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1070.h5
+      1071: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1071.h5
+      1072: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1072.h5
+      1073: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1073.h5
+      1074: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1074.h5
+      1087: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1087.h5
+      1088: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1088.h5
+      1089: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1089.h5
+      1090: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1090.h5
+      1091: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1091.h5
+      1092: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1092.h5
+      1093: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1093.h5
+      1094: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1094.h5
+      1095: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1095.h5
+      1096: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1096.h5
+      1097: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1097.h5
+      1098: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1098.h5
+      1099: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1099.h5
+      1100: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1100.h5
+      1101: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1101.h5
+      1102: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1102.h5
+      1103: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1103.h5
+      1104: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1104.h5
+      1105: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1105.h5
+      1106: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1106.h5
+      1107: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1107.h5
+      1108: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1108.h5
+      1109: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1109.h5
+      1110: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1110.h5
+      1111: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1111.h5
+      1112: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1112.h5
+      1113: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1113.h5
+      1114: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1114.h5
+      1115: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1115.h5
+      1116: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1116.h5
+      1117: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1117.h5
+      1118: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1118.h5
+      1119: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1119.h5
+      1120: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1120.h5
+      1121: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1121.h5
+      1122: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1122.h5
+      1123: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1123.h5
+      1124: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1124.h5
+      1125: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1125.h5
+      1126: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1126.h5
+      1127: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1127.h5
+      1128: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1128.h5
+      1129: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1129.h5
+      1130: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1130.h5
+      1131: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1131.h5
+      1132: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1132.h5
+      1133: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1133.h5
+      1134: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1134.h5
+      1135: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1135.h5
+      1136: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1136.h5
+      1137: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1137.h5
+      1138: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1138.h5
+      1139: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1139.h5
+      1140: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1140.h5
+      1141: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1141.h5
+      1142: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1142.h5
+      1143: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1143.h5
+      1148: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1148.h5
+    path_in_file:
+      1: raw
+      2: raw
+      3: raw
+      4: raw
+      5: raw
+      6: raw
+      8: raw
+      9: raw
+      10: raw
+      12: raw
+      13: raw
+      14: raw
+      15: raw
+      16: raw
+      17: raw
+      18: raw
+      20: raw
+      21: raw
+      22: raw
+      23: raw
+      24: raw
+      25: raw
+      26: raw
+      27: raw
+      29: raw
+      30: raw
+      32: raw
+      33: raw
+      34: raw
+      35: raw
+      36: raw
+      37: raw
+      39: raw
+      40: raw
+      41: raw
+      42: raw
+      43: raw
+      44: raw
+      45: raw
+      46: raw
+      48: raw
+      49: raw
+      51: raw
+      52: raw
+      53: raw
+      54: raw
+      55: raw
+      56: raw
+      57: raw
+      58: raw
+      59: raw
+      60: raw
+      61: raw
+      63: raw
+      64: raw
+      65: raw
+      66: raw
+      67: raw
+      69: raw
+      70: raw
+      72: raw
+      74: raw
+      75: raw
+      77: raw
+      78: raw
+      79: raw
+      82: raw
+      83: raw
+      84: raw
+      85: raw
+      86: raw
+      87: raw
+      88: raw
+      90: raw
+      92: raw
+      93: raw
+      94: raw
+      95: raw
+      97: raw
+      100: raw
+      102: raw
+      103: raw
+      105: raw
+      106: raw
+      108: raw
+      109: raw
+      814: raw
+      816: raw
+      928: raw
+      929: raw
+      935: raw
+      936: raw
+      937: raw
+      938: raw
+      939: raw
+      940: raw
+      941: raw
+      942: raw
+      943: raw
+      944: raw
+      945: raw
+      946: raw
+      947: raw
+      948: raw
+      949: raw
+      950: raw
+      951: raw
+      952: raw
+      953: raw
+      954: raw
+      955: raw
+      956: raw
+      957: raw
+      958: raw
+      959: raw
+      960: raw
+      961: raw
+      962: raw
+      963: raw
+      964: raw
+      965: raw
+      966: raw
+      967: raw
+      968: raw
+      969: raw
+      970: raw
+      971: raw
+      972: raw
+      973: raw
+      1000: raw
+      1001: raw
+      1002: raw
+      1003: raw
+      1004: raw
+      1005: raw
+      1006: raw
+      1007: raw
+      1008: raw
+      1009: raw
+      1010: raw
+      1011: raw
+      1012: raw
+      1013: raw
+      1014: raw
+      1015: raw
+      1016: raw
+      1017: raw
+      1018: raw
+      1019: raw
+      1020: raw
+      1021: raw
+      1022: raw
+      1023: raw
+      1024: raw
+      1025: raw
+      1026: raw
+      1027: raw
+      1028: raw
+      1029: raw
+      1030: raw
+      1031: raw
+      1032: raw
+      1033: raw
+      1034: raw
+      1035: raw
+      1036: raw
+      1037: raw
+      1048: raw
+      1049: raw
+      1050: raw
+      1051: raw
+      1052: raw
+      1053: raw
+      1054: raw
+      1055: raw
+      1056: raw
+      1057: raw
+      1058: raw
+      1059: raw
+      1060: raw
+      1061: raw
+      1062: raw
+      1063: raw
+      1064: raw
+      1065: raw
+      1066: raw
+      1067: raw
+      1068: raw
+      1069: raw
+      1070: raw
+      1071: raw
+      1072: raw
+      1073: raw
+      1074: raw
+      1087: raw
+      1088: raw
+      1089: raw
+      1090: raw
+      1091: raw
+      1092: raw
+      1093: raw
+      1094: raw
+      1095: raw
+      1096: raw
+      1097: raw
+      1098: raw
+      1099: raw
+      1100: raw
+      1101: raw
+      1102: raw
+      1103: raw
+      1104: raw
+      1105: raw
+      1106: raw
+      1107: raw
+      1108: raw
+      1109: raw
+      1110: raw
+      1111: raw
+      1112: raw
+      1113: raw
+      1114: raw
+      1115: raw
+      1116: raw
+      1117: raw
+      1118: raw
+      1119: raw
+      1120: raw
+      1121: raw
+      1122: raw
+      1123: raw
+      1124: raw
+      1125: raw
+      1126: raw
+      1127: raw
+      1128: raw
+      1129: raw
+      1130: raw
+      1131: raw
+      1132: raw
+      1133: raw
+      1134: raw
+      1135: raw
+      1136: raw
+      1137: raw
+      1138: raw
+      1139: raw
+      1140: raw
+      1141: raw
+      1142: raw
+      1143: raw
+      1148: raw
+    sigma: 0.025
+  rejection_threshold: 0.1
+  segmentation:
+    dtype: int64
+    path:
+      1: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1.h5
+      2: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/2.h5
+      3: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/3.h5
+      4: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/4.h5
+      5: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/5.h5
+      6: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/6.h5
+      8: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/8.h5
+      9: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/9.h5
+      10: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/10.h5
+      12: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/12.h5
+      13: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/13.h5
+      14: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/14.h5
+      15: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/15.h5
+      16: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/16.h5
+      17: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/17.h5
+      18: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/18.h5
+      20: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/20.h5
+      21: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/21.h5
+      22: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/22.h5
+      23: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/23.h5
+      24: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/24.h5
+      25: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/25.h5
+      26: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/26.h5
+      27: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/27.h5
+      29: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/29.h5
+      30: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/30.h5
+      32: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/32.h5
+      33: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/33.h5
+      34: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/34.h5
+      35: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/35.h5
+      36: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/36.h5
+      37: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/37.h5
+      39: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/39.h5
+      40: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/40.h5
+      41: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/41.h5
+      42: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/42.h5
+      43: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/43.h5
+      44: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/44.h5
+      45: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/45.h5
+      46: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/46.h5
+      48: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/48.h5
+      49: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/49.h5
+      51: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/51.h5
+      52: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/52.h5
+      53: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/53.h5
+      54: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/54.h5
+      55: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/55.h5
+      56: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/56.h5
+      57: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/57.h5
+      58: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/58.h5
+      59: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/59.h5
+      60: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/60.h5
+      61: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/61.h5
+      63: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/63.h5
+      64: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/64.h5
+      65: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/65.h5
+      66: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/66.h5
+      67: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/67.h5
+      69: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/69.h5
+      70: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/70.h5
+      72: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/72.h5
+      74: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/74.h5
+      75: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/75.h5
+      77: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/77.h5
+      78: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/78.h5
+      79: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/79.h5
+      82: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/82.h5
+      83: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/83.h5
+      84: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/84.h5
+      85: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/85.h5
+      86: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/86.h5
+      87: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/87.h5
+      88: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/88.h5
+      90: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/90.h5
+      92: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/92.h5
+      93: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/93.h5
+      94: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/94.h5
+      95: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/95.h5
+      97: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/97.h5
+      100: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/100.h5
+      102: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/102.h5
+      103: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/103.h5
+      105: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/105.h5
+      106: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/106.h5
+      108: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/108.h5
+      109: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/109.h5
+      814: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/814.h5
+      816: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/816.h5
+      928: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/928.h5
+      929: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/929.h5
+      935: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/935.h5
+      936: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/936.h5
+      937: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/937.h5
+      938: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/938.h5
+      939: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/939.h5
+      940: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/940.h5
+      941: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/941.h5
+      942: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/942.h5
+      943: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/943.h5
+      944: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/944.h5
+      945: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/945.h5
+      946: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/946.h5
+      947: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/947.h5
+      948: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/948.h5
+      949: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/949.h5
+      950: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/950.h5
+      951: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/951.h5
+      952: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/952.h5
+      953: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/953.h5
+      954: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/954.h5
+      955: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/955.h5
+      956: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/956.h5
+      957: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/957.h5
+      958: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/958.h5
+      959: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/959.h5
+      960: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/960.h5
+      961: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/961.h5
+      962: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/962.h5
+      963: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/963.h5
+      964: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/964.h5
+      965: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/965.h5
+      966: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/966.h5
+      967: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/967.h5
+      968: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/968.h5
+      969: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/969.h5
+      970: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/970.h5
+      971: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/971.h5
+      972: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/972.h5
+      973: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/973.h5
+      1000: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1000.h5
+      1001: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1001.h5
+      1002: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1002.h5
+      1003: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1003.h5
+      1004: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1004.h5
+      1005: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1005.h5
+      1006: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1006.h5
+      1007: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1007.h5
+      1008: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1008.h5
+      1009: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1009.h5
+      1010: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1010.h5
+      1011: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1011.h5
+      1012: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1012.h5
+      1013: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1013.h5
+      1014: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1014.h5
+      1015: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1015.h5
+      1016: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1016.h5
+      1017: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1017.h5
+      1018: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1018.h5
+      1019: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1019.h5
+      1020: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1020.h5
+      1021: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1021.h5
+      1022: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1022.h5
+      1023: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1023.h5
+      1024: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1024.h5
+      1025: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1025.h5
+      1026: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1026.h5
+      1027: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1027.h5
+      1028: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1028.h5
+      1029: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1029.h5
+      1030: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1030.h5
+      1031: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1031.h5
+      1032: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1032.h5
+      1033: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1033.h5
+      1034: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1034.h5
+      1035: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1035.h5
+      1036: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1036.h5
+      1037: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1037.h5
+      1048: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1048.h5
+      1049: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1049.h5
+      1050: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1050.h5
+      1051: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1051.h5
+      1052: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1052.h5
+      1053: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1053.h5
+      1054: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1054.h5
+      1055: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1055.h5
+      1056: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1056.h5
+      1057: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1057.h5
+      1058: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1058.h5
+      1059: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1059.h5
+      1060: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1060.h5
+      1061: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1061.h5
+      1062: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1062.h5
+      1063: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1063.h5
+      1064: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1064.h5
+      1065: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1065.h5
+      1066: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1066.h5
+      1067: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1067.h5
+      1068: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1068.h5
+      1069: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1069.h5
+      1070: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1070.h5
+      1071: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1071.h5
+      1072: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1072.h5
+      1073: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1073.h5
+      1074: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1074.h5
+      1087: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1087.h5
+      1088: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1088.h5
+      1089: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1089.h5
+      1090: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1090.h5
+      1091: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1091.h5
+      1092: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1092.h5
+      1093: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1093.h5
+      1094: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1094.h5
+      1095: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1095.h5
+      1096: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1096.h5
+      1097: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1097.h5
+      1098: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1098.h5
+      1099: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1099.h5
+      1100: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1100.h5
+      1101: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1101.h5
+      1102: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1102.h5
+      1103: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1103.h5
+      1104: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1104.h5
+      1105: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1105.h5
+      1106: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1106.h5
+      1107: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1107.h5
+      1108: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1108.h5
+      1109: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1109.h5
+      1110: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1110.h5
+      1111: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1111.h5
+      1112: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1112.h5
+      1113: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1113.h5
+      1114: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1114.h5
+      1115: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1115.h5
+      1116: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1116.h5
+      1117: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1117.h5
+      1118: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1118.h5
+      1119: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1119.h5
+      1120: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1120.h5
+      1121: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1121.h5
+      1122: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1122.h5
+      1123: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1123.h5
+      1124: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1124.h5
+      1125: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1125.h5
+      1126: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1126.h5
+      1127: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1127.h5
+      1128: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1128.h5
+      1129: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1129.h5
+      1130: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1130.h5
+      1131: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1131.h5
+      1132: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1132.h5
+      1133: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1133.h5
+      1134: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1134.h5
+      1135: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1135.h5
+      1136: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1136.h5
+      1137: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1137.h5
+      1138: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1138.h5
+      1139: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1139.h5
+      1140: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1140.h5
+      1141: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1141.h5
+      1142: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1142.h5
+      1143: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1143.h5
+      1148: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1148.h5
+    path_in_file:
+      1: labels
+      2: labels
+      3: labels
+      4: labels
+      5: labels
+      6: labels
+      8: labels
+      9: labels
+      10: labels
+      12: labels
+      13: labels
+      14: labels
+      15: labels
+      16: labels
+      17: labels
+      18: labels
+      20: labels
+      21: labels
+      22: labels
+      23: labels
+      24: labels
+      25: labels
+      26: labels
+      27: labels
+      29: labels
+      30: labels
+      32: labels
+      33: labels
+      34: labels
+      35: labels
+      36: labels
+      37: labels
+      39: labels
+      40: labels
+      41: labels
+      42: labels
+      43: labels
+      44: labels
+      45: labels
+      46: labels
+      48: labels
+      49: labels
+      51: labels
+      52: labels
+      53: labels
+      54: labels
+      55: labels
+      56: labels
+      57: labels
+      58: labels
+      59: labels
+      60: labels
+      61: labels
+      63: labels
+      64: labels
+      65: labels
+      66: labels
+      67: labels
+      69: labels
+      70: labels
+      72: labels
+      74: labels
+      75: labels
+      77: labels
+      78: labels
+      79: labels
+      82: labels
+      83: labels
+      84: labels
+      85: labels
+      86: labels
+      87: labels
+      88: labels
+      90: labels
+      92: labels
+      93: labels
+      94: labels
+      95: labels
+      97: labels
+      100: labels
+      102: labels
+      103: labels
+      105: labels
+      106: labels
+      108: labels
+      109: labels
+      814: labels
+      816: labels
+      928: labels
+      929: labels
+      935: labels
+      936: labels
+      937: labels
+      938: labels
+      939: labels
+      940: labels
+      941: labels
+      942: labels
+      943: labels
+      944: labels
+      945: labels
+      946: labels
+      947: labels
+      948: labels
+      949: labels
+      950: labels
+      951: labels
+      952: labels
+      953: labels
+      954: labels
+      955: labels
+      956: labels
+      957: labels
+      958: labels
+      959: labels
+      960: labels
+      961: labels
+      962: labels
+      963: labels
+      964: labels
+      965: labels
+      966: labels
+      967: labels
+      968: labels
+      969: labels
+      970: labels
+      971: labels
+      972: labels
+      973: labels
+      1000: labels
+      1001: labels
+      1002: labels
+      1003: labels
+      1004: labels
+      1005: labels
+      1006: labels
+      1007: labels
+      1008: labels
+      1009: labels
+      1010: labels
+      1011: labels
+      1012: labels
+      1013: labels
+      1014: labels
+      1015: labels
+      1016: labels
+      1017: labels
+      1018: labels
+      1019: labels
+      1020: labels
+      1021: labels
+      1022: labels
+      1023: labels
+      1024: labels
+      1025: labels
+      1026: labels
+      1027: labels
+      1028: labels
+      1029: labels
+      1030: labels
+      1031: labels
+      1032: labels
+      1033: labels
+      1034: labels
+      1035: labels
+      1036: labels
+      1037: labels
+      1048: labels
+      1049: labels
+      1050: labels
+      1051: labels
+      1052: labels
+      1053: labels
+      1054: labels
+      1055: labels
+      1056: labels
+      1057: labels
+      1058: labels
+      1059: labels
+      1060: labels
+      1061: labels
+      1062: labels
+      1063: labels
+      1064: labels
+      1065: labels
+      1066: labels
+      1067: labels
+      1068: labels
+      1069: labels
+      1070: labels
+      1071: labels
+      1072: labels
+      1073: labels
+      1074: labels
+      1087: labels
+      1088: labels
+      1089: labels
+      1090: labels
+      1091: labels
+      1092: labels
+      1093: labels
+      1094: labels
+      1095: labels
+      1096: labels
+      1097: labels
+      1098: labels
+      1099: labels
+      1100: labels
+      1101: labels
+      1102: labels
+      1103: labels
+      1104: labels
+      1105: labels
+      1106: labels
+      1107: labels
+      1108: labels
+      1109: labels
+      1110: labels
+      1111: labels
+      1112: labels
+      1113: labels
+      1114: labels
+      1115: labels
+      1116: labels
+      1117: labels
+      1118: labels
+      1119: labels
+      1120: labels
+      1121: labels
+      1122: labels
+      1123: labels
+      1124: labels
+      1125: labels
+      1126: labels
+      1127: labels
+      1128: labels
+      1129: labels
+      1130: labels
+      1131: labels
+      1132: labels
+      1133: labels
+      1134: labels
+      1135: labels
+      1136: labels
+      1137: labels
+      1138: labels
+      1139: labels
+      1140: labels
+      1141: labels
+      1142: labels
+      1143: labels
+      1148: labels
