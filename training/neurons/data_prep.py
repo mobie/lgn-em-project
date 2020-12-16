@@ -48,12 +48,14 @@ def check_refined_seg(idd=1):
     raw = x['raw'].T
     seg = x['target'].T
 
-    refined_seg = refine_seg(raw, seg)
+    bd, ws, seeds, seg = refine_seg(raw, seg, return_intermediates=True, restrict_to_bb=False)
     with napari.gui_qt():
         v = napari.Viewer()
         v.add_image(raw)
+        v.add_image(bd)
+        v.add_labels(ws)
+        v.add_labels(seeds)
         v.add_labels(seg)
-        v.add_image(refined_seg)
 
 
 def convert_all(resize=True):
@@ -68,7 +70,27 @@ def convert_all(resize=True):
             f.create_dataset('labels', data=seg, compression='gzip')
 
 
+def refine_all(restrict_to_bb):
+    all_files = glob(os.path.join(ROOT, '*.mat'))
+    out_key = 'labels_postprocessed'
+    if restrict_to_bb:
+        out_key += '/restricted'
+    else:
+        out_key += '/full'
+    for path in tqdm(all_files):
+        fname = os.path.split(path)[-1]
+        x = loadmat(path)
+        raw = x['raw'].T
+        seg = x['target'].T
+        seg = refine_seg(raw, seg, restrict_to_bb=restrict_to_bb)
+        out_path = os.path.join(ROOT_OUT, fname.replace('.mat', '.h5'))
+        with h5py.File(out_path, 'a') as f:
+            f.create_dataset(out_key, data=seg, compression='gzip')
+
+
 if __name__ == '__main__':
-    check_refined_seg()
+    refine_all(restrict_to_bb=False)
+    refine_all(restrict_to_bb=True)
+    # check_refined_seg()
     # check_data(resize=True)
     # convert_all()
