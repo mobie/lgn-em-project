@@ -7,16 +7,16 @@ names:
 slicing_config:
   # Sliding window size
   window_size:
-    [32, 180 , 180]
+    [32, 160, 160]
   # Sliding window stride
   stride:
-    [4, 32, 32]
+    [4, 40, 40]
 
 # TODO extract defects from the lgn dataset
 defect_augmentation_config:
-    p_missing_slice: 0.02
-    p_low_contrast: 0.02
-    p_deformed_slice: 0.02
+    p_missing_slice: 0.00
+    p_low_contrast: 0.01
+    p_deformed_slice: 0.00
     p_artifact_source: 0.00
     deformation_mode: 'undirected'
     deformation_strength: 16
@@ -66,10 +66,10 @@ volume_config:
 master_config:
   # We might need order 0 interpolation if we have segmentation in there somewhere.
   elastic_transform:
-    alpha: 2000.
+    alpha: 1000.
     sigma: 50.
     order: 0
-  random_slides: True
+  random_slides: False
   shape_after_slide: [160, 160]
 
 

@@ -48,7 +48,7 @@ def check_refined_seg(idd=1):
     raw = x['raw'].T
     seg = x['target'].T
 
-    bd, ws, seeds, seg = refine_seg(raw, seg, return_intermediates=True, restrict_to_bb=False)
+    bd, ws, seeds, seg = refine_seg(raw, seg, return_intermediates=True, restrict_to_bb=True)
     with napari.gui_qt():
         v = napari.Viewer()
         v.add_image(raw)
@@ -79,18 +79,57 @@ def refine_all(restrict_to_bb):
         out_key += '/full'
     for path in tqdm(all_files):
         fname = os.path.split(path)[-1]
+        out_path = os.path.join(ROOT_OUT, fname.replace('.mat', '.h5'))
+        # with h5py.File(out_path, 'r') as f:
+        #     if out_key in f:
+        #         continue
+
         x = loadmat(path)
         raw = x['raw'].T
         seg = x['target'].T
         seg = refine_seg(raw, seg, restrict_to_bb=restrict_to_bb)
-        out_path = os.path.join(ROOT_OUT, fname.replace('.mat', '.h5'))
+
+        seg = rescale(seg, (0.75,  1., 1.), order=0, preserve_range=True,
+                      anti_aliasing=False).astype(seg.dtype)
+
         with h5py.File(out_path, 'a') as f:
-            f.create_dataset(out_key, data=seg, compression='gzip')
+            if out_key in f:
+                del f[out_key]
+            ds = f.require_dataset(out_key, shape=seg.shape, dtype=seg.dtype, compression='gzip')
+            ds[:] = seg
+
+
+def view_train_data(n_images):
+    import napari
+    all_files = glob(os.path.join(ROOT_OUT, '*.h5'))
+    all_files = all_files[:n_images]
+    all_files = [
+        '/g/kreshuk/data/helmstaedter/training_data/neurons/rompani/1001.h5'
+    ]
+    for path in tqdm(all_files):
+        with h5py.File(path, 'r') as f:
+            print(path)
+            with napari.gui_qt():
+                viewer = napari.Viewer()
+                raw = f['raw'][:]
+                seg = f['labels'][:]
+                viewer.add_image(raw)
+                viewer.add_labels(seg)
+
+                if 'labels_postprocessed/restricted' in f:
+                    seg_pp_restricted = f['labels_postprocessed/restricted'][:]
+                    viewer.add_labels(seg_pp_restricted)
+                if 'labels_postprocessed/full' in f:
+                    seg_pp = f['labels_postprocessed/full'][:]
+                    viewer.add_labels(seg_pp)
 
 
 if __name__ == '__main__':
-    refine_all(restrict_to_bb=False)
+    # view_train_data(n_images=10)
+
     refine_all(restrict_to_bb=True)
-    # check_refined_seg()
+
+    # refine_all(restrict_to_bb=True)
+    # check_refined_seg(idd=1001)
     # check_data(resize=True)
     # convert_all()

@@ -51,12 +51,12 @@ names:
 slicing_config:
   stride:
   - 4
-  - 32
-  - 32
+  - 40
+  - 40
   window_size:
   - 32
-  - 128
-  - 128
+  - 160
+  - 160
 volume_config:
   raw:
     dtype: float32
@@ -153,30 +153,30 @@ volume_config:
       999: /g/kreshuk/data/helmstaedter/training_data/neurons/rompani/999.h5
     path_in_file:
       1: labels
-      98: labels
-      99: labels
-      974: labels
-      976: labels
-      977: labels
-      978: labels
-      979: labels
-      980: labels
-      981: labels
-      982: labels
-      983: labels
-      984: labels
-      985: labels
-      986: labels
-      987: labels
-      988: labels
-      989: labels
-      990: labels
-      991: labels
-      992: labels
-      993: labels
-      994: labels
-      995: labels
-      996: labels
-      997: labels
-      998: labels
-      999: labels
+      98: labels_postprocessed/restricted
+      99: labels_postprocessed/restricted
+      974: labels_postprocessed/restricted
+      976: labels_postprocessed/restricted
+      977: labels_postprocessed/restricted
+      978: labels_postprocessed/restricted
+      979: labels_postprocessed/restricted
+      980: labels_postprocessed/restricted
+      981: labels_postprocessed/restricted
+      982: labels_postprocessed/restricted
+      983: labels_postprocessed/restricted
+      984: labels_postprocessed/restricted
+      985: labels_postprocessed/restricted
+      986: labels_postprocessed/restricted
+      987: labels_postprocessed/restricted
+      988: labels_postprocessed/restricted
+      989: labels_postprocessed/restricted
+      990: labels_postprocessed/restricted
+      991: labels_postprocessed/restricted
+      992: labels_postprocessed/restricted
+      993: labels_postprocessed/restricted
+      994: labels_postprocessed/restricted
+      995: labels_postprocessed/restricted
+      996: labels_postprocessed/restricted
+      997: labels_postprocessed/restricted
+      998: labels_postprocessed/restricted
+      999: labels_postprocessed/restricted

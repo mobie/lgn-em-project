@@ -67,7 +67,8 @@ def set_up_training(project_directory,
 
     loss = dice_loss()
     loss_val = dice_loss(is_val=True)
-    metric = mws_metric()
+    # metric = mws_metric()
+    metric = loss_val
 
     # Build trainer and validation metric
     logger.info("Building trainer.")
@@ -196,21 +197,18 @@ def copy_train_file(project_directory):
 
 
 def get_offsets():
-    # return [[-1, 0, 0], [0, -1, 0], [0, 0, -1],
-    #         [-2, 0, 0], [0, -3, 0], [0, 0, -3],
-    #         [-3, 0, 0], [0, -9, 0], [0, 0, -9],
-    #         [-4, 0, 0], [0, -18, 0], [0, 0, -18]]
     return [[-1, 0, 0], [0, -1, 0], [0, 0, -1],
             [-2, 0, 0], [0, -3, 0], [0, 0, -3],
-            [-3, 0, 0], [0, -9, 0], [0, 0, -9]]
+            [-3, 0, 0], [0, -9, 0], [0, 0, -9],
+            [-4, 0, 0], [0, -18, 0], [0, 0, -18]]
 
 
-# TODO use mc + rand for metric
 # TODO defect augmentations
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('version', type=str)
     parser.add_argument('config_folder', type=str)
+    parser.add_argument('--learn_ignore_transitions', type=int, default=0)
     parser.add_argument('--gpus', nargs='+', default=[0], type=int)
     parser.add_argument('--max_train_iters', type=int, default=int(1e5))
     parser.add_argument('--from_checkpoint', type=int, default=0)
@@ -234,8 +232,9 @@ def main():
         'retain_mask': True,
         'segmentation_to_binary': False,
         'offsets': get_offsets(),
-        # 'smoothing_config': {'sigma': 1.},
-        'ignore_label': 0
+        'smoothing_config': {'sigma': 1.},
+        'ignore_label': 0,
+        'learn_ignore_transitions': bool(args.learn_ignore_transitions)
     }
 
     # only copy files to project directory if we DON'T load from checkpoint
