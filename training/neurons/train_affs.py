@@ -16,7 +16,10 @@ from inferno.io.transform.base import Compose
 from inferno.extensions.criteria import SorensenDiceLoss
 
 from neurofire.criteria.loss_wrapper import LossWrapper
-from neurofire.criteria.loss_transforms import ApplyAndRemoveMask, InvertTarget
+from neurofire.metrics.arand import ArandErrorFromMWS
+from neurofire.criteria.loss_transforms import (ApplyAndRemoveMask,
+                                                InvertTarget,
+                                                RemoveSegmentationFromTarget)
 
 import mipnet.models.unet as models
 from mipnet.datasets import get_cremi_loader
@@ -29,12 +32,25 @@ logging.basicConfig(format='[+][%(asctime)-15s][%(name)s %(levelname)s]'
 logger = logging.getLogger(__name__)
 
 
-def dice_loss():
+def dice_loss(is_val=False):
     print("Build Dice loss")
-    trafos = [ApplyAndRemoveMask(), InvertTarget()]
+    if is_val:
+        trafos = [RemoveSegmentationFromTarget(),
+                  ApplyAndRemoveMask(), InvertTarget()]
+    else:
+        trafos = [ApplyAndRemoveMask(), InvertTarget()]
     trafos = Compose(*trafos)
     return LossWrapper(criterion=SorensenDiceLoss(),
                        transforms=trafos)
+
+
+def mws_metric():
+    strides = [4, 4, 4]
+    metric = ArandErrorFromMWS(offsets=get_offsets(),
+                               strides=strides,
+                               randomize_strides=True,
+                               average_slices=False)
+    return metric
 
 
 def set_up_training(project_directory,
@@ -50,8 +66,8 @@ def set_up_training(project_directory,
         model = getattr(models, model_name)(**config.get('model_kwargs'))
 
     loss = dice_loss()
-    # TODO proper metric
-    metric = dice_loss()
+    loss_val = dice_loss(is_val=True)
+    metric = mws_metric()
 
     # Build trainer and validation metric
     logger.info("Building trainer.")
@@ -61,6 +77,7 @@ def set_up_training(project_directory,
         .save_every((1000, 'iterations'),
                     to_directory=os.path.join(project_directory, 'Weights'))\
         .build_criterion(loss)\
+        .build_validation_criterion(loss_val)\
         .build_optimizer(**config.get('training_optimizer_kwargs'))\
         .evaluate_metric_every('never')\
         .validate_every((100, 'iterations'), for_num_iterations=5)\
@@ -166,6 +183,7 @@ def make_data_config(config_folder, data_config_file, n_batches,  affinity_confi
 def make_validation_config(config_folder, validation_config_file, affinity_config):
     template = yaml2dict(f'./{config_folder}/validation_config.yml')
     template['volume_config']['segmentation']['affinity_config'] = affinity_config
+    affinity_config.update({'retain_segmentation': True})
     with open(validation_config_file, 'w') as f:
         yaml.dump(template, f)
 
@@ -178,10 +196,13 @@ def copy_train_file(project_directory):
 
 
 def get_offsets():
+    # return [[-1, 0, 0], [0, -1, 0], [0, 0, -1],
+    #         [-2, 0, 0], [0, -3, 0], [0, 0, -3],
+    #         [-3, 0, 0], [0, -9, 0], [0, 0, -9],
+    #         [-4, 0, 0], [0, -18, 0], [0, 0, -18]]
     return [[-1, 0, 0], [0, -1, 0], [0, 0, -1],
             [-2, 0, 0], [0, -3, 0], [0, 0, -3],
-            [-3, 0, 0], [0, -9, 0], [0, 0, -9],
-            [-4, 0, 0], [0, -18, 0], [0, 0, -18]]
+            [-3, 0, 0], [0, -9, 0], [0, 0, -9]]
 
 
 # TODO use mc + rand for metric
@@ -213,7 +234,7 @@ def main():
         'retain_mask': True,
         'segmentation_to_binary': False,
         'offsets': get_offsets(),
-        'smoothing_config': {'sigma': 1.},
+        # 'smoothing_config': {'sigma': 1.},
         'ignore_label': 0
     }
 
@@ -221,7 +242,7 @@ def main():
     if not bool(args.from_checkpoint):
         config_folder = args.config_folder
         make_train_config(config_folder, train_config, gpus, affinity_config)
-        make_data_config(config_folder, data_config, len(gpus), affinity_config)
+        make_data_config(config_folder, data_config, 2 * len(gpus), affinity_config)
         make_validation_config(config_folder, validation_config, affinity_config)
         copy_train_file(project_directory)
 
