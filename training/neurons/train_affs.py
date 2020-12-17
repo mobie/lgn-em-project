@@ -67,8 +67,8 @@ def set_up_training(project_directory,
 
     loss = dice_loss()
     loss_val = dice_loss(is_val=True)
-    # metric = mws_metric()
-    metric = loss_val
+    metric = mws_metric()
+    # metric = loss_val
 
     # Build trainer and validation metric
     logger.info("Building trainer.")
@@ -84,7 +84,7 @@ def set_up_training(project_directory,
         .validate_every((100, 'iterations'), for_num_iterations=5)\
         .register_callback(SaveAtBestValidationScore(smoothness=smoothness, verbose=True))\
         .build_metric(metric)\
-        .register_callback(AutoLR(factor=0.99,
+        .register_callback(AutoLR(factor=0.98,
                                   patience='100 iterations',
                                   monitor_while='validating',
                                   monitor_momentum=smoothness,
@@ -241,7 +241,7 @@ def main():
     if not bool(args.from_checkpoint):
         config_folder = args.config_folder
         make_train_config(config_folder, train_config, gpus, affinity_config)
-        make_data_config(config_folder, data_config, 2 * len(gpus), affinity_config)
+        make_data_config(config_folder, data_config, len(gpus), affinity_config)
         make_validation_config(config_folder, validation_config, affinity_config)
         copy_train_file(project_directory)
 
