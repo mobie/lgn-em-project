@@ -38,7 +38,9 @@ def make_watershed():
     conf = configs['watershed']
     conf.update({
         'threshold': .25,
-        'size_filter': 50
+        'size_filter': 50,
+        'channel_begin': 1,
+        'channel_end': 3
     })
 
     with open(os.path.join(CONFIG_FOLDER, 'watershed.config'), 'w') as f:
@@ -46,16 +48,22 @@ def make_watershed():
 
     t = task(tmp_folder=TMP_FOLDER, config_dir=CONFIG_FOLDER,
              target=TARGET, max_jobs=MAX_JOBS,
-             input_path=PATH, input_key='boundaries',
+             input_path=PATH, input_key='affinities',
              output_path=PATH, output_key='watershed')
     ret = luigi.build([t], local_scheduler=True)
     assert ret
 
 
-def make_graph_and_costs(beta=.8):
+def make_graph_and_costs(beta):
     task = ProblemWorkflow
     configs = task.get_config()
     _make_global_config(configs)
+
+    conf = configs['block_edge_features']
+    offsets = [[-1, 0, 0], [0, -1, 0], [0, 0, -1]]
+    conf.update({'offsets': offsets})
+    with open(os.path.join(CONFIG_FOLDER, 'block_edge_features.config'), 'w') as f:
+        json.dump(conf, f)
 
     conf = configs['probs_to_costs']
     conf.update({'beta': beta})
@@ -64,7 +72,7 @@ def make_graph_and_costs(beta=.8):
 
     t = task(tmp_folder=TMP_FOLDER, config_dir=CONFIG_FOLDER,
              target=TARGET, max_jobs=MAX_JOBS,
-             input_path=PATH, input_key='boundaries',
+             input_path=PATH, input_key='affinities',
              ws_path=PATH, ws_key='watershed',
              problem_path=PATH)
     ret = luigi.build([t], local_scheduler=True)
@@ -73,7 +81,7 @@ def make_graph_and_costs(beta=.8):
 
 def set_up_problem():
     make_watershed()
-    make_graph_and_costs()
+    make_graph_and_costs(beta=.6)
 
 
 def check_watersheds():

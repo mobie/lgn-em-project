@@ -1,50 +1,47 @@
 import os
-import numpy as np
 import h5py
 import z5py
+import numpy as np
 
 from skimage.transform import resize
 from elf.segmentation.utils import normalize_input
 
 PATH = '/g/rompani/lgn-em-datasets/data/0.0.0/images/local/sbem-adult-1-lgn-raw.n5'
 BOUTON_PATH = '/g/rompani/lgn-em-datasets/data/0.0.0/images/local/sbem-adult-1-lgn-boutons.n5'
-# MODEL_PATH = os.path.join('/g/kreshuk/pape/Work/my_projects/super_embeddings/experiments/lgn',
-#                           'proofread/z100/imws_saved_state.torch')
-MODEL_PATH = '/g/kreshuk/pape/Work/my_projects/super_embeddings/experiments/lgn/models_supervised-2d/lr0.0001_use-affs1.state'
+MODEL_PATH = os.path.join('/g/kreshuk/pape/Work/my_projects/super_embeddings/experiments/lgn/models_unsupervised-3d',
+                          'lr0.0001_use-affs1_weight1.state')
 
 CENTER = (338.21969826291144, 115.66693588888701, 33.773648522038826)
 
 
 def run_prediction(raw):
-    from mipnet.models.unet import UNet2d
+    from mipnet.models.unet import AnisotropicUNet
     from mipnet.utils.prediction import predict_with_halo
-    model_kwargs = dict(
-        in_channels=1, out_channels=8,
-        initial_features=32, depth=4,
-        pad_convs=True, activation='Sigmoid'
-    )
+    scale_factors = [
+        [1, 2, 2], [1, 2, 2], [2, 2, 2], [2, 2, 2]
+    ]
+    model_kwargs = dict(scale_factors=scale_factors,
+                        in_channels=1, out_channels=12,
+                        initial_features=32, gain=2,
+                        pad_convs=True)
     ckpt = (
-        UNet2d,
+        AnisotropicUNet,
         model_kwargs,
         MODEL_PATH,
         'model'
     )
 
-    block_shape = (1,) + raw.shape[1:]
+    block_shape = (32, 256, 256)
+    halo = (8, 64, 64)
+    outer_block_shape = tuple(bs + 2 * ha for bs, ha in zip(block_shape, halo))
 
     def preprocess(inp):
         inp = normalize_input(inp)
-        return inp[0]
-
-    def postprocess(inp):
-        return inp[:, None]
+        return inp
 
     gpus = [0]
     pred = predict_with_halo(raw, ckpt, gpus=gpus, inner_block_shape=block_shape,
-                             outer_block_shape=block_shape, preprocess=preprocess,
-                             postprocess=postprocess)
-    # TODO the proper way would be to also mirror affinities according to their offset
-    # to boundaries
+                             outer_block_shape=outer_block_shape, preprocess=preprocess)
     pred = np.max(pred[:4], axis=0)
     pred = normalize_input(pred)
     return pred
@@ -101,7 +98,7 @@ def check_test_data():
 
 
 def replace_defect():
-    zz = [66]
+    zz = [66, 67, 68]
     with h5py.File('./test_data.h5', 'a') as f:
         for z in zz:
             for name in ('raw', 'boundaries', 'boutons'):
@@ -110,8 +107,8 @@ def replace_defect():
 
 
 if __name__ == '__main__':
-    # make_test_data()
-    # add_boutons()
-
+    make_test_data()
+    add_boutons()
     replace_defect()
-    check_test_data()
+
+    # check_test_data()

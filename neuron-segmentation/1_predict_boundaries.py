@@ -1,70 +1,62 @@
+import json
 import os
 
 import z5py
-import numpy as np
-from mipnet.models.unet import UNet2d
-from mipnet.utils.prediction import predict_with_halo
 
-from elf.segmentation.utils import normalize_input
-from elf.wrapper import RoiWrapper
+import luigi
 
-# if we need much larger volumes, we need to use the inference workflow from cluster_tools,
-# but it would need to be adapted quite a bit to support the different pre/postprocessing
-# import luigi
-# from cluster_tools.inference import InferenceLocal, InferenceSlurm
-
+from cluster_tools.inference import InferenceLocal, InferenceSlurm
 from common import get_bounding_box, BLOCK_SHAPE
 
-MODEL_PATH = os.path.join('/g/kreshuk/pape/Work/my_projects/super_embeddings/experiments/lgn/models_supervised-2d',
-                          'lr0.0001_use-affs1.state')
+MODEL_PATH = '../training/neurons/networks/v1/Weights'
 
 
-def predict_boundaries(gpus):
-    model_kwargs = dict(
-        in_channels=1, out_channels=8,
-        initial_features=32, depth=4,
-        pad_convs=True, activation='Sigmoid'
-    )
-    ckpt = (
-        UNet2d,
-        model_kwargs,
-        MODEL_PATH,
-        'model'
-    )
+def predict_boundaries(target, gpus, threads_per_job=6):
+    task = InferenceLocal if target == 'local' else InferenceSlurm
+    halo = [8, 64, 64]
 
-    inner_block_shape = (1, 1024, 1024)
-    halo = (0, 64, 64)
-    outer_block_shape = tuple(ish + 2 * ha for ish, ha in zip(inner_block_shape, halo))
+    output_key = {
+        'affinities': [0, 3]
+    }
 
-    def preprocess(inp):
-        inp = normalize_input(inp)
-        return inp[0]
+    tmp_folder = './tmp_prediction'
+    config_dir = os.path.join(tmp_folder, 'configs')
+    os.makedirs(config_dir, exist_ok=True)
 
-    def to_boundaries(pred):
-        # TODO the proper way would be to also mirror affinities according to their offset
-        # to boundaries
-        pred = np.max(pred[:4], axis=0)
-        pred = normalize_input(pred)
-        return pred[None, None]
+    roi_begin, roi_end = get_bounding_box(return_as_lists=True)
+    conf = task.default_global_config()
+    conf.update({'block_shape': BLOCK_SHAPE,
+                 'roi_begin': roi_begin,
+                 'roi_end': roi_end})
+    with open(os.path.join(config_dir, 'global.config'), 'w') as f:
+        json.dump(conf, f)
 
-    path = '/g/rompani/lgn-em-datasets/data/0.0.0/images/local/sbem-adult-1-lgn-raw.n5'
-    f_in = z5py.File(path, 'r')
-    ds_raw = f_in['setup0/timepoint0/s0']
+    if target == 'local':
+        device_mapping = {ii: gpu for ii, gpu in enumerate(gpus)}
+    else:
+        device_mapping = None
 
-    # path for temporary data
-    out_path = './data.n5'
-    f_out = z5py.File(out_path, 'a')
-    ds_pred = f_out.require_dataset('boundaries', shape=ds_raw.shape, dtype='float32', compression='gzip',
-                                    chunks=tuple(BLOCK_SHAPE))
+    conf = task.default_task_config()
+    conf.update({
+        'dtype': 'uint8',
+        'device_mapping': device_mapping,
+        'threads_per_job': threads_per_job
+    })
+    with open(os.path.join(config_dir, 'inference.config'), 'w') as f:
+        json.dump(conf, f)
 
-    bb = get_bounding_box(intersect_with_blocking=True)
+    input_path = '/g/rompani/lgn-em-datasets/data/0.0.0/images/local/sbem-adult-1-lgn-raw.n5'
+    input_key = 'setup0/timepoint0/s0'
 
-    ds_raw = RoiWrapper(ds_raw, bb)
-    ds_pred = RoiWrapper(ds_pred, bb)
+    # TODO for larger outputs we should put this on scratch
+    output_path = './data.n5'
 
-    predict_with_halo(ds_raw, ckpt, gpus=gpus, inner_block_shape=inner_block_shape,
-                      outer_block_shape=outer_block_shape, preprocess=preprocess,
-                      postprocess=to_boundaries, output=ds_pred)
+    t = task(tmp_folder=tmp_folder, config_dir=config_dir, max_jobs=len(gpus),
+             input_path=input_path, input_key=input_key,
+             output_path=output_path, output_key=output_key,
+             checkpoint_path=MODEL_PATH, halo=halo,
+             framework='inferno')
+    assert luigi.build([t], local_scheduler=True)
 
 
 def check_predictions():
@@ -79,9 +71,10 @@ def check_predictions():
 
     path = './data.n5'
     f = z5py.File(path, 'r')
-    ds = f['boundaries']
+    ds = f['affinities']
     ds.n_threads = 8
-    pred = ds[bb]
+    bb_affs = (slice(None),) + bb
+    pred = ds[bb_affs]
 
     with napari.gui_qt():
         viewer = napari.Viewer()
@@ -90,6 +83,6 @@ def check_predictions():
 
 
 if __name__ == '__main__':
-    gpus = list(range(8))
-    predict_boundaries(gpus)
-    # check_predictions()
+    gpus = [5, 6, 7]
+    predict_boundaries(target='local', gpus=gpus)
+    check_predictions()
