@@ -13,33 +13,32 @@ slicing_config:
   stride:
     [4, 32, 32]
 
-# TODO extract defects from the lgn dataset
+  
 defect_augmentation_config:
-    p_missing_slice: 0.01
-    p_low_contrast: 0.01
-    p_deformed_slice: 0.01
-    p_artifact_source: 0.00
-    deformation_mode: 'undirected'
-    deformation_strength: 16
-    # artifact_source:
-    #     min_masking_ratio: .5
-    #     slicing_config:
-    #       window_size: [1, 344, 344]
-    #       stride: [1, 128, 128]
-    #       downsampling_ratio: [1, 1, 1]
-    #     volume_config:
-    #       artifacts:
-    #         # TODO proper path
-    #         path: '/g/kreshuk/data/rompani'
-    #         path_in_h5_dataset: 'defect_sections/raw'
-    #         dtype: float32
-    #       alpha_mask:
-    #         path: '/g/kreshuk/data/rompani'
-    #         path_in_h5_dataset: 'defect_sections/mask'
-    #     master_config:
-    #       elastic_transform:
-    #         alpha: 2000.
-    #         sigma: 50.
+  p_missing_slice: 0.01
+  p_low_contrast: 0.01
+  p_deformed_slice: 0.01
+  p_artifact_source: 0.01
+  deformation_mode: 'undirected'
+  deformation_strength: 16
+  artifact_source:
+      min_masking_ratio: .5
+      slicing_config:
+        window_size: [1, 276, 276]
+        stride: [1, 32, 32]
+      volume_config:
+        artifacts:
+          path: '/g/kreshuk/pape/Work/data/rompani/neuron_training_data/defects.h5'
+          path_in_h5_dataset: 'defect_sections/raw'
+          dtype: float32
+        alpha_mask:
+          path: '/g/kreshuk/pape/Work/data/rompani/neuron_training_data/defects.h5'
+          path_in_h5_dataset: 'defect_sections/mask'
+      master_config:
+        elastic_transform:
+          alpha: 2000.
+          sigma: 50.
+
     
 # Specify paths to volumes
 volume_config:
