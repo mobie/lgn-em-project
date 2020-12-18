@@ -18,7 +18,8 @@
       1000.0
     ],
     "storage": {
-      "local": "local/sbem-adult-1-lgn-boutons.xml"
+      "local": "local/sbem-adult-1-lgn-boutons.xml",
+      "remote": "remote/sbem-adult-1-lgn-boutons.xml"
     },
     "tableFolder": "tables/sbem-adult-1-lgn-boutons",
     "type": "segmentation"
@@ -42,7 +43,8 @@
       255.0
     ],
     "storage": {
-      "local": "local/sbem-adult-1-lgn-raw.xml"
+      "local": "local/sbem-adult-1-lgn-raw.xml",
+      "remote": "remote/sbem-adult-1-lgn-raw.xml"
     },
     "type": "image"
   }
