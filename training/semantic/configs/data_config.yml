@@ -1,0 +1,112 @@
+names:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+
+# Specify how the data needs to be sliced before feeding to the network.
+# We use a 3D sliding window over the dataset to extract patches, which
+# are then fed to the network as batches.
+slicing_config:
+  # Sliding window size
+  window_size:
+    [32, 276, 276]
+  # Sliding window stride
+  stride:
+    [4, 32, 32]
+
+# TODO extract defects from the lgn dataset
+defect_augmentation_config:
+    p_missing_slice: 0.01
+    p_low_contrast: 0.01
+    p_deformed_slice: 0.01
+    p_artifact_source: 0.00
+    deformation_mode: 'undirected'
+    deformation_strength: 16
+    # artifact_source:
+    #     min_masking_ratio: .5
+    #     slicing_config:
+    #       window_size: [1, 344, 344]
+    #       stride: [1, 128, 128]
+    #       downsampling_ratio: [1, 1, 1]
+    #     volume_config:
+    #       artifacts:
+    #         # TODO proper path
+    #         path: '/g/kreshuk/data/rompani'
+    #         path_in_h5_dataset: 'defect_sections/raw'
+    #         dtype: float32
+    #       alpha_mask:
+    #         path: '/g/kreshuk/data/rompani'
+    #         path_in_h5_dataset: 'defect_sections/mask'
+    #     master_config:
+    #       elastic_transform:
+    #         alpha: 2000.
+    #         sigma: 50.
+    
+# Specify paths to volumes
+volume_config:
+  # Raw data
+  raw:
+    path:
+      1: '/g/kreshuk/data/helmstaedter/training_data/semantic/rompani/cube-1.h5'
+      2: '/g/kreshuk/data/helmstaedter/training_data/semantic/rompani/cube-2.h5'
+      3: '/g/kreshuk/data/helmstaedter/training_data/semantic/rompani/cube-3.h5'
+      4: '/g/kreshuk/data/helmstaedter/training_data/semantic/rompani/cube-4.h5'
+      5: '/g/kreshuk/data/helmstaedter/training_data/semantic/rompani/cube-5.h5'
+      6: '/g/kreshuk/data/helmstaedter/training_data/semantic/rompani/cube-6.h5'
+    path_in_file:
+      1: 'raw'
+      2: 'raw'
+      3: 'raw'
+      4: 'raw'
+      5: 'raw'
+      6: 'raw'
+    dtype: float32
+    sigma: 0.025
+  # Segmentation
+  segmentation:
+    path:
+      1: '/g/kreshuk/data/helmstaedter/training_data/semantic/rompani/cube-1.h5'
+      2: '/g/kreshuk/data/helmstaedter/training_data/semantic/rompani/cube-2.h5'
+      3: '/g/kreshuk/data/helmstaedter/training_data/semantic/rompani/cube-3.h5'
+      4: '/g/kreshuk/data/helmstaedter/training_data/semantic/rompani/cube-4.h5'
+      5: '/g/kreshuk/data/helmstaedter/training_data/semantic/rompani/cube-5.h5'
+      6: '/g/kreshuk/data/helmstaedter/training_data/semantic/rompani/cube-6.h5'
+    path_in_file:
+      1: 'labels'
+      2: 'labels'
+      3: 'labels'
+      4: 'labels'
+      5: 'labels'
+      6: 'labels'
+    dtype: int64
+    label_volume: False
+  rejection_threshold: 0.2
+  background_value: -1
+
+
+# TODO implement slides along all axis to simulate defects ?!
+# to mimic stitching artifacts
+# Configuration for the master dataset.
+master_config:
+  # We might need order 0 interpolation if we have segmentation in there somewhere.
+  elastic_transform:
+    alpha: 2000.
+    sigma: 50.
+    order: 0
+  random_slides: True
+  shape_after_slide: [256, 256]
+
+
+# Specify configuration for the loader
+loader_config:
+  # Number of processes to use for loading data. Set to (say) 10 if you wish to
+  # use 10 CPU cores, or to 0 if you wish to use the same process for training and
+  # data-loading (generally not recommended).
+  batch_size: 1
+  num_workers: 6
+  drop_last: True
+  pin_memory: False
+  shuffle: True

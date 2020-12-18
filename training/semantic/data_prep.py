@@ -13,7 +13,7 @@ ROOT_OUT = '/g/kreshuk/data/helmstaedter/training_data/semantic/rompani'
 def convert(path, resize=False):
     with h5py.File(path, 'r') as f:
         raw = f['em'][:]
-        seg = f['label'][:].astype('uint32')
+        seg = f['label'][:].astype('int32')
     # map 0 to background
     seg -= 1
 
@@ -52,5 +52,5 @@ def convert_all(resize=True):
 
 
 if __name__ == '__main__':
-    check_data(idd=2, resize=False)
-    # convert_all()
+    # check_data(idd=2, resize=False)
+    convert_all()
