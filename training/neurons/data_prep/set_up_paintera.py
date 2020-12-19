@@ -1,55 +1,68 @@
 import os
-import z5py
-# import numpy as np
+
+import numpy as np
 import nifty.tools as nt
+import z5py
+
 from elf.segmentation.workflows import simple_multicut_workflow
 from elf.segmentation.watershed import stacked_watershed
+from mipnet.utils.prediction import predict_with_halo, normalize
 
-ROOT = '/g/kreshuk/pape/Work/data/rompani/neuron_training_data'
+ROOT = '/g/kreshuk/pape/Work/data/rompani/training_data/raw_data'
 
 
-def load_data(block_id, block_shape):
-    path = os.path.join(ROOT, 'train_data_5.n5')
+def predict_affs(raw):
+    gpus = list(range(4))
+
+    ckpt = '/g/kreshuk/pape/Work/mobie/lgn-em-datasets/training/neurons/networks/v2/Weights'
+    inner_block_shape = [32, 128, 128]
+    halo = [8, 64, 64]
+    outer_block_shape = [ish + 2 * ha
+                         for ish, ha in zip(inner_block_shape, halo)]
+
+    affs = predict_with_halo(raw, ckpt, gpus,
+                             inner_block_shape, outer_block_shape,
+                             preprocess=normalize,
+                             model_is_inferno=True)
+    affs = affs[:3]
+    return affs
+
+
+def load_data(block_id):
+    path = os.path.join(ROOT, 'train_data_%i.n5' % block_id)
     f = z5py.File(path)
     ds = f['raw']
-    # ds_affs = f['predictions_3d/lr0.0001_use-affs1_weight1.state']
-    ds_affs = f['predictions_3d/segemV4']
-    shape = ds.shape
-    blocks = nt.blocking([0, 0, 0], shape, block_shape)
-    block = blocks.getBlock(block_id)
-    bb = tuple(slice(beg, end) for beg, end in zip(block.begin, block.end))
+    ds.n_threads = 8
+    raw = ds[:]
 
-    raw = ds[bb]
-    # bb_affs = (slice(0, 4),) + bb
-    # affs = ds_affs[bb_affs].squeeze()
-    # affs = np.max(affs, axis=0)
-
-    bb_affs = (1,) + bb
-    affs = ds_affs[bb_affs].squeeze()
-
+    affs = predict_affs(raw)
     return raw, affs
 
 
-def segment(boundaries, beta):
+def segment(affs, beta):
+    boundaries = np.max(affs[1:], axis=0)
     ws, _ = stacked_watershed(boundaries, threshold=.5, sigma_seeds=1.)
-    results = simple_multicut_workflow(boundaries,
+    offsets = [[-1, 0, 0], [0, -1, 0], [0, 0, -1]]
+    results = simple_multicut_workflow(affs,
+                                       offsets=offsets,
                                        use_2dws=True,
                                        watershed=ws,
                                        multicut_solver='kernighan-lin',
                                        beta=beta,
-                                       offsets=None,
                                        n_threads=8,
                                        weighting_scheme=None,
                                        return_intermediates=True)
     ws = results['watershed']
     node_labels = results['node_labels']
-    return ws, boundaries, node_labels
+    return ws, node_labels
 
 
-def make_data(block_id, block_shape, beta):
-    raw, boundaries = load_data(block_id, block_shape)
-    seg, boundaries, node_labels = segment(boundaries, beta)
-    return raw, boundaries, seg, node_labels
+def make_data(block_id, beta):
+    print("Run predictions ...")
+    raw, affs = load_data(block_id)
+    print("Run segmentation ...")
+    seg, node_labels = segment(affs, beta)
+    return raw, affs, seg, node_labels
 
 
 def make_paintera(path):
@@ -68,12 +81,7 @@ def make_paintera(path):
 
 
 def set_up_paintera(block_id, check):
-    # block_shape = [64, 512, 512]
-    block_shape = [48, 384, 384]
-    # block_shape = [32, 256, 256]
-    print("Making data...")
-    raw, boundaries, ws, node_labels = make_data(block_id, block_shape, beta=.5)
-    print("... done")
+    raw, boundaries, ws, node_labels = make_data(block_id, beta=.6)
 
     if check:
         import napari
@@ -96,4 +104,4 @@ def set_up_paintera(block_id, check):
 
 
 if __name__ == '__main__':
-    set_up_paintera(block_id=1, check=False)
+    set_up_paintera(block_id=0, check=False)
