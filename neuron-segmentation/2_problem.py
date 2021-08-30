@@ -5,9 +5,9 @@ import luigi
 import z5py
 from cluster_tools.watershed import WatershedWorkflow
 from cluster_tools.workflows import ProblemWorkflow
-from common import BLOCK_SHAPE, get_bounding_box
+from common import BLOCK_SHAPE, get_bounding_box, HALO_CHECK
 
-PATH = './data.n5'
+PATH = '/scratch/pape/lgn/data.n5'
 TARGET = 'local'
 MAX_JOBS = 16
 TMP_FOLDER = './tmp_problem'
@@ -61,7 +61,7 @@ def make_graph_and_costs(beta):
 
     conf = configs['block_edge_features']
     offsets = [[-1, 0, 0], [0, -1, 0], [0, 0, -1]]
-    conf.update({'offsets': offsets})
+    conf.update({"offsets": offsets})
     with open(os.path.join(CONFIG_FOLDER, 'block_edge_features.config'), 'w') as f:
         json.dump(conf, f)
 
@@ -86,7 +86,7 @@ def set_up_problem():
 
 def check_watersheds():
     import napari
-    bb = get_bounding_box(scale=0)
+    bb = get_bounding_box(scale=0, halo=HALO_CHECK)
 
     path = '/g/rompani/lgn-em-datasets/data/0.0.0/images/local/sbem-adult-1-lgn-raw.n5'
     f = z5py.File(path, 'r')
@@ -108,4 +108,4 @@ def check_watersheds():
 
 if __name__ == '__main__':
     set_up_problem()
-    # check_watersheds()
+    check_watersheds()

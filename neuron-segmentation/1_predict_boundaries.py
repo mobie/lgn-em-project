@@ -8,15 +8,15 @@ import luigi
 from cluster_tools.inference import InferenceLocal, InferenceSlurm
 from common import get_bounding_box, BLOCK_SHAPE
 
-MODEL_PATH = '../training/neurons/networks/v1/Weights'
+MODEL_PATH = "../training/neurons/checkpoints/affinity_model/model.pt"
 
 
 def predict_boundaries(target, gpus, threads_per_job=6):
     task = InferenceLocal if target == 'local' else InferenceSlurm
-    halo = [8, 64, 64]
+    halo = [4, 32, 32]
 
     output_key = {
-        'affinities': [0, 3]
+        "affinities": [0, 3]
     }
 
     tmp_folder = './tmp_prediction'
@@ -38,24 +38,25 @@ def predict_boundaries(target, gpus, threads_per_job=6):
 
     conf = task.default_task_config()
     conf.update({
-        'dtype': 'uint8',
-        'device_mapping': device_mapping,
-        'threads_per_job': threads_per_job
+        "dtype": "uint8",
+        "device_mapping": device_mapping,
+        "threads_per_job": threads_per_job
     })
-    with open(os.path.join(config_dir, 'inference.config'), 'w') as f:
+    with open(os.path.join(config_dir, "inference.config"), "w") as f:
         json.dump(conf, f)
 
-    input_path = '/g/rompani/lgn-em-datasets/data/0.0.0/images/local/sbem-adult-1-lgn-raw.n5'
-    input_key = 'setup0/timepoint0/s0'
+    input_path = "/g/rompani/lgn-em-datasets/data/0.0.0/images/local/sbem-adult-1-lgn-raw.n5"
+    input_key = "setup0/timepoint0/s0"
 
-    # TODO for larger outputs we should put this on scratch
-    output_path = './data.n5'
+    output_root = "/scratch/pape/lgn"
+    os.makedirs(output_root, exist_ok=True)
+    output_path = os.path.join(output_root, "data.n5")
 
     t = task(tmp_folder=tmp_folder, config_dir=config_dir, max_jobs=len(gpus),
              input_path=input_path, input_key=input_key,
              output_path=output_path, output_key=output_key,
              checkpoint_path=MODEL_PATH, halo=halo,
-             framework='inferno')
+             framework="pytorch")
     assert luigi.build([t], local_scheduler=True)
 
 
@@ -63,15 +64,15 @@ def check_predictions():
     import napari
     bb = get_bounding_box(scale=0)
 
-    path = '/g/rompani/lgn-em-datasets/data/0.0.0/images/local/sbem-adult-1-lgn-raw.n5'
-    f = z5py.File(path, 'r')
-    ds = f['setup0/timepoint0/s0']
+    path = "/g/rompani/lgn-em-datasets/data/0.0.0/images/local/sbem-adult-1-lgn-raw.n5"
+    f = z5py.File(path, "r")
+    ds = f["setup0/timepoint0/s0"]
     ds.n_threads = 8
     raw = ds[bb]
 
-    path = './data.n5'
-    f = z5py.File(path, 'r')
-    ds = f['affinities']
+    path = "./data.n5"
+    f = z5py.File(path, "r")
+    ds = f["affinities"]
     ds.n_threads = 8
     bb_affs = (slice(None),) + bb
     pred = ds[bb_affs]
@@ -82,7 +83,7 @@ def check_predictions():
         viewer.add_image(pred)
 
 
-if __name__ == '__main__':
-    gpus = [5, 6, 7]
-    predict_boundaries(target='local', gpus=gpus)
+if __name__ == "__main__":
+    gpus = [4, 5, 6, 7]
+    predict_boundaries(target="local", gpus=gpus)
     check_predictions()

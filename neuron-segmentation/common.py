@@ -5,9 +5,10 @@ from pybdv.util import get_scale_factors
 
 CENTER_COORD = (335.96069414637003, 119.70199563151154, 33.14926510940082)
 
-# TODO try with a bigger halo once everything works
-# HALO_UM = [10, 25, 25]
-HALO_UM = [5, 10, 10]
+# try with a bigger halo once everything works
+HALO_CHECK = [2.5, 5, 5]
+HALO_SMALL = [5, 15, 15]
+HALO_LARGE = [15, 30, 30]
 
 BLOCK_SHAPE = [32, 256, 256]
 
@@ -28,7 +29,7 @@ def load_resolution(scale=0):
     # return [0.04, 0.02, 0.02]
 
 
-def get_bounding_box(scale=0, halo=HALO_UM, intersect_with_blocking=False, return_as_lists=False):
+def get_bounding_box(scale=0, halo=HALO_SMALL, intersect_with_blocking=False, return_as_lists=False):
     res = load_resolution(scale=scale)
     center = [int(ce / re) for ce, re in zip(CENTER_COORD[::-1], res)]
     halo_pix = [int(ha / re) for ha, re in zip(halo, res)]
@@ -60,9 +61,9 @@ def get_bounding_box(scale=0, halo=HALO_UM, intersect_with_blocking=False, retur
     return bb
 
 
-def halo_to_pix(scale=0):
+def halo_to_pix(scale=0, halo=HALO_SMALL):
     res = load_resolution(scale)
-    shape_pix = [2 * ha / re for ha, re in zip(HALO_UM, res)]
+    shape_pix = [2 * ha / re for ha, re in zip(halo, res)]
     print(shape_pix)
 
 

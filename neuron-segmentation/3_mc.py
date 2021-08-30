@@ -6,7 +6,7 @@ import z5py
 
 from cluster_tools.multicut import MulticutWorkflow
 from cluster_tools.write import WriteLocal, WriteSlurm
-from common import get_bounding_box, BLOCK_SHAPE
+from common import get_bounding_box, BLOCK_SHAPE, HALO_CHECK
 
 PATH = './data.n5'
 TARGET = 'local'
@@ -85,7 +85,7 @@ def run_mc():
 
 def check_mc():
     import napari
-    bb = get_bounding_box(scale=0)
+    bb = get_bounding_box(scale=0, halo=HALO_CHECK)
 
     path = '/g/rompani/lgn-em-datasets/data/0.0.0/images/local/sbem-adult-1-lgn-raw.n5'
     f = z5py.File(path, 'r')
