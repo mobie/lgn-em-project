@@ -1,0 +1,82 @@
+{
+  "is2D": false,
+  "sources": {
+    "sbem-adult-1-lgn-boutons": {
+      "segmentation": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/sbem-adult-1-lgn-boutons.xml"
+          },
+          "bdv.n5.s3": {
+            "relativePath": "images/remote/sbem-adult-1-lgn-boutons.xml"
+          }
+        },
+        "tableData": {
+          "tsv": {
+            "relativePath": "tables/sbem-adult-1-lgn-boutons"
+          }
+        }
+      }
+    },
+    "sbem-adult-1-lgn-mask": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/sbem-adult-1-lgn-mask.xml"
+          },
+          "bdv.n5.s3": {
+            "relativePath": "images/remote/sbem-adult-1-lgn-mask.xml"
+          }
+        }
+      }
+    },
+    "sbem-adult-1-lgn-raw": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/sbem-adult-1-lgn-raw.xml"
+          },
+          "bdv.n5.s3": {
+            "relativePath": "images/remote/sbem-adult-1-lgn-raw.xml"
+          }
+        }
+      }
+    },
+    "sbem-adult-1-lgn-traces": {
+      "segmentation": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/local/sbem-adult-1-lgn-traces.xml"
+          }
+        },
+        "tableData": {
+          "tsv": {
+            "relativePath": "tables/sbem-adult-1-lgn-traces"
+          }
+        }
+      }
+    }
+  },
+  "views": {
+    "default": {
+      "isExclusive": true,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "white",
+            "contrastLimits": [
+              0.0,
+              255.0
+            ],
+            "name": "sbem-adult-1-lgn-raw",
+            "opacity": 1.0,
+            "sources": [
+              "sbem-adult-1-lgn-raw"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "bookmark"
+    }
+  }
+}

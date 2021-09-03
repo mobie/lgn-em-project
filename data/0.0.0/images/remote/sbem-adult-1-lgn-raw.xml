@@ -10,7 +10,7 @@
       </Attributes>
       <ViewSetup>
         <id>0</id>
-        <name>Setup0</name>
+        <name>sbem-adult-1-lgn-raw</name>
         <size>42112 34944 2560</size>
         <voxelSize>
           <unit>micrometer</unit>
@@ -30,7 +30,6 @@
       <SigningRegion>us-west-2</SigningRegion>
       <ServiceEndpoint>https://s3.embl.de</ServiceEndpoint>
       <BucketName>lgn-em</BucketName>
-      <Authentication>Protected</Authentication>
     </ImageLoader>
   </SequenceDescription>
   <ViewRegistrations>

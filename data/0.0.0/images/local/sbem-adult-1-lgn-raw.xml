@@ -13,7 +13,7 @@
       </Attributes>
       <ViewSetup>
         <id>0</id>
-        <name>Setup0</name>
+        <name>sbem-adult-1-lgn-raw</name>
         <size>42112 34944 2560</size>
         <voxelSize>
           <unit>micrometer</unit>

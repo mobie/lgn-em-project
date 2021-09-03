@@ -13,7 +13,7 @@
       </Attributes>
       <ViewSetup>
         <id>0</id>
-        <name>Setup0</name>
+        <name>sbem-adult-1-lgn-boutons</name>
         <size>21120 17536 2560</size>
         <voxelSize>
           <unit>micrometer</unit>

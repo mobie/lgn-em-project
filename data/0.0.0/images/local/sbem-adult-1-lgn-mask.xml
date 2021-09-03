@@ -12,7 +12,7 @@
       </Attributes>
       <ViewSetup>
         <id>0</id>
-        <name>Setup0</name>
+        <name>sbem-adult-1-lgn-mask</name>
         <size>1408 1152 384</size>
         <voxelSize>
           <unit>micrometer</unit>

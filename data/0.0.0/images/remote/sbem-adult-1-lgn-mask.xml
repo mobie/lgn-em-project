@@ -9,7 +9,7 @@
       </Attributes>
       <ViewSetup>
         <id>0</id>
-        <name>Setup0</name>
+        <name>sbem-adult-1-lgn-mask</name>
         <size>1408 1152 384</size>
         <voxelSize>
           <unit>micrometer</unit>
@@ -29,7 +29,6 @@
       <SigningRegion>us-west-2</SigningRegion>
       <ServiceEndpoint>https://s3.embl.de</ServiceEndpoint>
       <BucketName>lgn-em</BucketName>
-      <Authentication>Protected</Authentication>
     </ImageLoader>
   </SequenceDescription>
   <ViewRegistrations>

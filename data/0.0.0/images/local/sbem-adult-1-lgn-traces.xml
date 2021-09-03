@@ -13,7 +13,7 @@
       </Attributes>
       <ViewSetup>
         <id>0</id>
-        <name>Setup0</name>
+        <name>sbem-adult-1-lgn-traces</name>
         <size>5376 4480 1280</size>
         <voxelSize>
           <unit>micrometer</unit>
