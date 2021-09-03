@@ -5,19 +5,19 @@ import luigi
 import z5py
 from cluster_tools.watershed import WatershedWorkflow
 from cluster_tools.workflows import ProblemWorkflow
-from common import BLOCK_SHAPE, get_bounding_box, HALO_CHECK
+from common import BLOCK_SHAPE, get_bounding_box, get_halo
 
 PATH = '/scratch/pape/lgn/data.n5'
 TARGET = 'local'
 MAX_JOBS = 16
-TMP_FOLDER = './tmp_problem'
+TMP_FOLDER = '/scratch/pape/lgn/tmp_problem'
 CONFIG_FOLDER = os.path.join(TMP_FOLDER, 'configs')
 
 
-def _make_global_config(configs):
+def _make_global_config(configs, halo_name):
     os.makedirs(CONFIG_FOLDER, exist_ok=True)
 
-    roi_begin, roi_end = get_bounding_box(return_as_lists=True)
+    roi_begin, roi_end = get_bounding_box(return_as_lists=True, halo=get_halo(halo_name))
 
     conf = configs['global']
     conf.update({
@@ -30,10 +30,10 @@ def _make_global_config(configs):
         json.dump(conf, f)
 
 
-def make_watershed():
+def make_watershed(halo_name):
     task = WatershedWorkflow
     configs = task.get_config()
-    _make_global_config(configs)
+    _make_global_config(configs, halo_name)
 
     conf = configs['watershed']
     conf.update({
@@ -54,10 +54,10 @@ def make_watershed():
     assert ret
 
 
-def make_graph_and_costs(beta):
+def make_graph_and_costs(beta, halo_name):
     task = ProblemWorkflow
     configs = task.get_config()
-    _make_global_config(configs)
+    _make_global_config(configs, halo_name)
 
     conf = configs['block_edge_features']
     offsets = [[-1, 0, 0], [0, -1, 0], [0, 0, -1]]
@@ -79,14 +79,14 @@ def make_graph_and_costs(beta):
     assert ret
 
 
-def set_up_problem():
-    make_watershed()
-    make_graph_and_costs(beta=.6)
+def set_up_problem(halo_name):
+    make_watershed(halo_name)
+    make_graph_and_costs(beta=.6, halo_name=halo_name)
 
 
 def check_watersheds():
     import napari
-    bb = get_bounding_box(scale=0, halo=HALO_CHECK)
+    bb = get_bounding_box(scale=0, halo=get_halo("check"))
 
     path = '/g/rompani/lgn-em-datasets/data/0.0.0/images/local/sbem-adult-1-lgn-raw.n5'
     f = z5py.File(path, 'r')
@@ -107,5 +107,5 @@ def check_watersheds():
 
 
 if __name__ == '__main__':
-    set_up_problem()
+    set_up_problem(halo_name="large")
     check_watersheds()

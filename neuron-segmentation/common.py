@@ -5,12 +5,16 @@ from pybdv.util import get_scale_factors
 
 CENTER_COORD = (335.96069414637003, 119.70199563151154, 33.14926510940082)
 
-# try with a bigger halo once everything works
 HALO_CHECK = [2.5, 5, 5]
 HALO_SMALL = [5, 15, 15]
 HALO_LARGE = [15, 30, 30]
+HALOS = {"check": HALO_CHECK, "small": HALO_SMALL, "large": HALO_LARGE}
 
 BLOCK_SHAPE = [32, 256, 256]
+
+
+def get_halo(name):
+    return HALOS[name]
 
 
 def load_scale_factors(scale):

@@ -6,19 +6,19 @@ import z5py
 
 from cluster_tools.multicut import MulticutWorkflow
 from cluster_tools.write import WriteLocal, WriteSlurm
-from common import get_bounding_box, BLOCK_SHAPE, HALO_CHECK
+from common import get_bounding_box, BLOCK_SHAPE, get_halo
 
-PATH = './data.n5'
+PATH = '/scratch/pape/lgn/data.n5'
 TARGET = 'local'
 MAX_JOBS = 16
-TMP_FOLDER = './tmp_multicut'
+TMP_FOLDER = '/scratch/pape/lgn/tmp_multicut'
 CONFIG_FOLDER = os.path.join(TMP_FOLDER, 'configs')
 
 
-def _make_global_config(configs):
+def _make_global_config(configs, halo_name):
     os.makedirs(CONFIG_FOLDER, exist_ok=True)
 
-    roi_begin, roi_end = get_bounding_box(return_as_lists=True)
+    roi_begin, roi_end = get_bounding_box(return_as_lists=True, halo=get_halo(halo_name))
 
     conf = configs['global']
     conf.update({
@@ -31,10 +31,10 @@ def _make_global_config(configs):
         json.dump(conf, f)
 
 
-def solve_mc():
+def solve_mc(halo_name):
     task = MulticutWorkflow
     configs = task.get_config()
-    _make_global_config(configs)
+    _make_global_config(configs, halo_name)
 
     t = task(tmp_folder=TMP_FOLDER, config_dir=CONFIG_FOLDER,
              target=TARGET, max_jobs=MAX_JOBS,
@@ -77,15 +77,15 @@ def write_segmentation():
     assert ret
 
 
-def run_mc():
-    solve_mc()
+def run_mc(halo_name):
+    solve_mc(halo_name)
     # merge_bouton_labels()
     write_segmentation()
 
 
 def check_mc():
     import napari
-    bb = get_bounding_box(scale=0, halo=HALO_CHECK)
+    bb = get_bounding_box(scale=0, halo=get_halo("check"))
 
     path = '/g/rompani/lgn-em-datasets/data/0.0.0/images/local/sbem-adult-1-lgn-raw.n5'
     f = z5py.File(path, 'r')
@@ -113,5 +113,5 @@ def check_mc():
 
 
 if __name__ == '__main__':
-    run_mc()
+    run_mc(halo_name="large")
     check_mc()
