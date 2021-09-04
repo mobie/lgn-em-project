@@ -1,6 +1,15 @@
 {
   "is2D": false,
   "sources": {
+    "neurons": {
+      "segmentation": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/bdv-n5/neurons.xml"
+          }
+        }
+      }
+    },
     "sbem-adult-1-lgn-boutons": {
       "segmentation": {
         "imageData": {
@@ -77,6 +86,78 @@
         }
       ],
       "uiSelectionGroup": "bookmark"
+    },
+    "raw": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "white",
+            "contrastLimits": [
+              0.0,
+              255.0
+            ],
+            "name": "sbem-adult-1-lgn-raw",
+            "opacity": 1.0,
+            "sources": [
+              "sbem-adult-1-lgn-raw"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "em"
+    },
+    "neurons": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "segmentationDisplay": {
+            "lut": "glasbey",
+            "name": "neurons",
+            "opacity": 0.5,
+            "sources": [
+              "neurons"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "segmentation"
+    },
+    "mask": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "white",
+            "contrastLimits": [
+              0.0,
+              255.0
+            ],
+            "name": "sbem-adult-1-lgn-mask",
+            "opacity": 1.0,
+            "sources": [
+              "sbem-adult-1-lgn-mask"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "mask"
+    },
+    "traces": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "segmentationDisplay": {
+            "lut": "glasbey",
+            "name": "sbem-adult-1-lgn-traces",
+            "opacity": 0.5,
+            "sources": [
+              "sbem-adult-1-lgn-traces"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "segmentation"
     }
   }
 }
