@@ -77,6 +77,10 @@ def write_segmentation():
     assert ret
 
 
+# TODO
+# - implement for full volume
+# - use the mask when segmenting the full volume
+# - size filter post-processing
 def run_mc(halo_name):
     solve_mc(halo_name)
     # merge_bouton_labels()

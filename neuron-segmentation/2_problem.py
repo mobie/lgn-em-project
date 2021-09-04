@@ -79,6 +79,9 @@ def make_graph_and_costs(beta, halo_name):
     assert ret
 
 
+# TODO
+# - implement for full volume
+# - use the mask when segmenting the full volume
 def set_up_problem(halo_name):
     make_watershed(halo_name)
     make_graph_and_costs(beta=.6, halo_name=halo_name)

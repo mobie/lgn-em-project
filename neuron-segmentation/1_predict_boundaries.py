@@ -11,6 +11,9 @@ from common import get_bounding_box, BLOCK_SHAPE, get_halo
 MODEL_PATH = "../training/neurons/checkpoints/affinity_model/model.pt"
 
 
+# TODO
+# - implement for full volume
+# - use the mask when segmenting the full volume
 def predict_boundaries(target, gpus, threads_per_job=6, halo_name="small"):
     task = InferenceLocal if target == 'local' else InferenceSlurm
     block_halo = [4, 32, 32]
