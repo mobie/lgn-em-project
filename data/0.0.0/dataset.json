@@ -6,6 +6,9 @@
         "imageData": {
           "bdv.n5": {
             "relativePath": "images/bdv-n5/neurons.xml"
+          },
+          "bdv.n5.s3": {
+            "relativePath": "images/bdv-n5-s3/neurons.xml"
           }
         }
       }
@@ -87,42 +90,6 @@
       ],
       "uiSelectionGroup": "bookmark"
     },
-    "raw": {
-      "isExclusive": false,
-      "sourceDisplays": [
-        {
-          "imageDisplay": {
-            "color": "white",
-            "contrastLimits": [
-              0.0,
-              255.0
-            ],
-            "name": "sbem-adult-1-lgn-raw",
-            "opacity": 1.0,
-            "sources": [
-              "sbem-adult-1-lgn-raw"
-            ]
-          }
-        }
-      ],
-      "uiSelectionGroup": "em"
-    },
-    "neurons": {
-      "isExclusive": false,
-      "sourceDisplays": [
-        {
-          "segmentationDisplay": {
-            "lut": "glasbey",
-            "name": "neurons",
-            "opacity": 0.5,
-            "sources": [
-              "neurons"
-            ]
-          }
-        }
-      ],
-      "uiSelectionGroup": "segmentation"
-    },
     "mask": {
       "isExclusive": false,
       "sourceDisplays": [
@@ -142,6 +109,42 @@
         }
       ],
       "uiSelectionGroup": "mask"
+    },
+    "neurons": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "segmentationDisplay": {
+            "lut": "glasbey",
+            "name": "neurons",
+            "opacity": 0.5,
+            "sources": [
+              "neurons"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "segmentation"
+    },
+    "raw": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "white",
+            "contrastLimits": [
+              0.0,
+              255.0
+            ],
+            "name": "sbem-adult-1-lgn-raw",
+            "opacity": 1.0,
+            "sources": [
+              "sbem-adult-1-lgn-raw"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "em"
     },
     "traces": {
       "isExclusive": false,
