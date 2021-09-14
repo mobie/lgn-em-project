@@ -89,6 +89,6 @@ def check_predictions():
 
 
 if __name__ == "__main__":
-    gpus = [0, 1, 4, 5, 6, 7]
+    gpus = [1, 2, 4, 5, 6, 7]
     predict_boundaries(target="local", gpus=gpus, halo_name="large")
     check_predictions()
