@@ -29,8 +29,6 @@ def load_resolution(scale=0):
     res = get_resolution(xml, setup_id=0)
     res = [re * sf for re, sf in zip(res, scale_factor)]
     return res
-    # return [0.04, 0.01, 0.01]
-    # return [0.04, 0.02, 0.02]
 
 
 def get_bounding_box(scale=0, halo=HALO_SMALL, intersect_with_blocking=False, return_as_lists=False):
