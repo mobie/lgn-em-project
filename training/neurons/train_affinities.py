@@ -11,24 +11,45 @@ OFFSETS = [
 ]
 
 
-def get_loader(is_train, patch_shape, batch_size=1, n_samples=None):
+def get_loader(is_train, patch_shape, batch_size=1, n_samples=None, with_defect_augmentation=True):
     raw_key = "raw"
     label_key = "labels"
     if is_train:
-        ids = [1, 2, 3, 4, 6]
+        ids = [1, 2, 3, 4, 5, 6, 7, 8]
     else:
-        ids = [7]
-    data_paths = [f"./training_data/v2/block{ii}.h5" for ii in ids]
+        ids = [9, 10]
+    data_paths = [f"./training_data/v3/block{ii}.h5" for ii in ids]
     label_transform = torch_em.transform.label.AffinityTransform(offsets=OFFSETS,
                                                                  ignore_label=0,
                                                                  add_binary_target=False,
                                                                  add_mask=True,
                                                                  include_ignore_transitions=True)
+    if with_defect_augmentation:
+        defect_path = "./training_data/defects.h5"
+        patch_shape_2d = (1,) + patch_shape[1:]
+        artifact_source = torch_em.transform.get_artifact_source(
+            defect_path, patch_shape_2d, min_mask_fraction=0.5,
+            raw_key="defect_sections/raw", mask_key="defect_sections/mask"
+        )
+        defect_trafo = torch_em.transform.EMDefectAugmentation(
+            p_drop_slice=0.02,
+            p_low_contrast=0.02,
+            p_deform_slice=0.02,
+            p_paste_artifact=0.02,
+            artifact_source=artifact_source
+        )
+        raw_transform = torch_em.transform.get_raw_transform(
+            augmentation2=defect_trafo
+        )
+    else:
+        raw_transform = None
+
     return torch_em.default_segmentation_loader(
         data_paths, raw_key,
         data_paths, label_key,
         patch_shape=patch_shape,
         batch_size=batch_size,
+        raw_transform=raw_transform,
         label_transform2=label_transform
     )
 
@@ -54,7 +75,7 @@ def get_model():
 
 def train_affinities(args):
     model = get_model()
-    patch_shape = [32, 320, 320]
+    patch_shape = (32, 320, 320)
 
     train_loader = get_loader(
         is_train=True,
@@ -91,27 +112,27 @@ def train_affinities(args):
 
 def check(args, train=True, val=True, n_images=2):
     from torch_em.util.debug import check_loader
-    patch_shape = [32, 256, 256]
+    patch_shape = (32, 256, 256)
     if train:
         print("Check train loader")
-        loader = get_loader(True, patch_shape)
+        loader = get_loader(True, patch_shape,
+                            with_defect_augmentation=bool(args.defect_augmentation))
         check_loader(loader, n_images)
     if val:
         print("Check val loader")
-        loader = get_loader(False, patch_shape)
+        loader = get_loader(False, patch_shape,
+                            with_defect_augmentation=bool(args.defect_augmentation))
         check_loader(loader, n_images)
 
 
 # TODO advanced traning, compare "torch_em/experiments/neuron_segmentation/cremi"
 # - more defect and mis-alignment augmentations
-# -- pasting defect patches
-# -- simulating contrast defect
-# -- simulating tear defect
 # -- alignment jitter
 # - more augmentations
 # -- elastic
 if __name__ == '__main__':
     parser = parser_helper()
+    parser.add_argument("--defect_augmentation", "-d", default=1)
     args = parser.parse_args()
     if args.check:
         check(args, train=True, val=True)
