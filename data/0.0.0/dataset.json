@@ -1,6 +1,42 @@
 {
   "is2D": false,
   "sources": {
+    "defect-annotation-1": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/bdv-n5/defect-annotation-1.xml"
+          },
+          "bdv.n5.s3": {
+            "relativePath": "images/bdv-n5-s3/defect-annotation-1.xml"
+          }
+        }
+      }
+    },
+    "defect-annotation-2": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/bdv-n5/defect-annotation-2.xml"
+          },
+          "bdv.n5.s3": {
+            "relativePath": "images/bdv-n5-s3/defect-annotation-2.xml"
+          }
+        }
+      }
+    },
+    "defect-annotation-large": {
+      "image": {
+        "imageData": {
+          "bdv.n5": {
+            "relativePath": "images/bdv-n5/defect-annotation-large.xml"
+          },
+          "bdv.n5.s3": {
+            "relativePath": "images/bdv-n5-s3/defect-annotation-large.xml"
+          }
+        }
+      }
+    },
     "neurons": {
       "segmentation": {
         "imageData": {
@@ -89,6 +125,66 @@
         }
       ],
       "uiSelectionGroup": "bookmark"
+    },
+    "defect-annotation-1": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "white",
+            "contrastLimits": [
+              0.0,
+              255.0
+            ],
+            "name": "defect-annotation-1",
+            "opacity": 1.0,
+            "sources": [
+              "defect-annotation-1"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "mask"
+    },
+    "defect-annotation-2": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "white",
+            "contrastLimits": [
+              0.0,
+              255.0
+            ],
+            "name": "defect-annotation-2",
+            "opacity": 1.0,
+            "sources": [
+              "defect-annotation-2"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "mask"
+    },
+    "defect-annotation-large": {
+      "isExclusive": false,
+      "sourceDisplays": [
+        {
+          "imageDisplay": {
+            "color": "white",
+            "contrastLimits": [
+              0.0,
+              255.0
+            ],
+            "name": "defect-annotation-large",
+            "opacity": 1.0,
+            "sources": [
+              "defect-annotation-large"
+            ]
+          }
+        }
+      ],
+      "uiSelectionGroup": "mask"
     },
     "mask": {
       "isExclusive": false,
