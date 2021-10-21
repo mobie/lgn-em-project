@@ -1,10 +1,11 @@
 import json
 
 import napari
+import numpy as np
 from elf.io import open_file
 from mobie.viewer_transformations import normalized_affine_to_position
 
-MIN_BB_SHAPE = [1, 512, 512]
+MIN_BB_SHAPE = (1, 512, 512)
 
 
 def parse_position(line):
@@ -55,11 +56,26 @@ def parse_annotations(annotation_path):
 
 def check_annotation(data_path, defect_type, defect):
 
-    # TODO get the bounding box from the points in the defects, enlarge to MIN_BB_SHAPE if necessary
-    bb = ""
+    resolution = np.array([0.04, 0.01, 0.01])
+    points = np.array(defect)[:, ::-1]
+    points /= resolution
 
-    # TODO bring the defect annotation points into the local coordinate system by subtracting the bb corner
-    points = ""
+    # TODO get the bounding box from the points in the defects, enlarge to MIN_BB_SHAPE if necessary
+    min_ = np.min(points, axis=0).astype("int")
+    max_ = np.max(points, axis=0).astype("int") + 1
+    assert len(min_) == len(max_) == 3
+    bb = [slice(mi, ma) for mi, ma in zip(min_, max_)]
+    bb_shape = tuple(ma - mi for mi, ma in zip(min_, max_))
+
+    bb_center = tuple((mi + ma) // 2 for mi, ma in zip(min_, max_))
+    for i, (sh, mish, ce) in enumerate(zip(bb_shape, MIN_BB_SHAPE, bb_center)):
+        if sh < mish:
+            bb[i] = slice(ce - mish // 2, ce + mish // 2)
+            min_[i] = ce - mish // 2
+    bb = tuple(bb)
+
+    points -= min_
+    points = points.astype("int")
 
     key = "setup0/timepoint0/s0"
     with open_file(data_path, "r") as f:
